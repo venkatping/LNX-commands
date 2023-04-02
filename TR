@@ -22,3 +22,11 @@ OUTPUT: Alex got % marks
 
 6. tr can do multiple character replacement as well. Let’s see another example of translating braces into parenthesis:
 # echo "{baeldung}" | tr '{}' '()'
+
+7. Squeeze Repeating Characters
+# echo 'Hi,   nice   to  meet            you!' | tr -s ' '
+OUTPUT: Hi, nice to meet you!
+
+8. Delete Specific characters
+# echo "A a B b C c" | tr -d 'a-z'
+OUTPUT: A  B  C
