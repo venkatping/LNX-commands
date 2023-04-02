@@ -1,0 +1,12 @@
+#To view pcs cluster configuration
+pcs config show
+
+#To clean stonith history
+pcs stonith history cleanup
+
+#To view stonith history
+pcs stonith history
+
+#To view cluster status
+pcs status
+

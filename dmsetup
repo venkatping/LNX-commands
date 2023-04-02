@@ -1,0 +1,59 @@
+#It is a command using which we can do low level logical volume management. So basically dmsetup is used to manage logical devices that use the device-mapper driver
+
+/bin/yum whatprovides dmsetup
+
+#To list the device mapper devices
+dmsetup ls
+
+#To get information about any DM device
+dmsetup info /dev/mapper/centos-root
+
+#To get DM device info in column wise
+dmsetup info -c /dev/mapper/centos-root
+dmsetup info -C /dev/mapper/centos-root
+
+#To list the DM device dependencies
+dmsetup deps /dev/mapper/centos-root
+
+#To get the status of a DM device
+dmsetup status /dev/mapper/centos-root
+
+#To destroy the inactive table for a device
+dmsetup clear /dev/mapper/centos-test
+
+#To send message to target
+dmsetup device_name sector message
+dmsetup /dev/VG00/LV00 0 "My Logical device"
+
+#To remove a device
+dmsetup remove /dev/VG00/LV00
+
+#To remove all the devices
+dmsetup remove_all 
+
+#To rename the device
+dmsetup /dev/VG00/LV00 /dev/VG00/LV04
+
+#To suspend a device
+dmsetup suspend --nolockfs /dev/VG00/LV00
+dmsetup suspend --noflush /dev/VG00/LV00
+
+#To un-suspend a device
+dmsetup resume /dev/VG00/LV00 
+
+#To output the table for a device
+dmsetup table /dev/VG00/LV00
+
+#To get the dmsetup version info
+dmsetup version
+
+#To display the help information
+dmsetup -h
+
+#list the devices names of currently configured mirror mappings
+dmsetup ls --target mirror
+
+#list the devices names of currently configured mirror mappings
+dmsetup ls --target linear
+
+dmsetup ls --tree

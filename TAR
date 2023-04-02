@@ -1,0 +1,11 @@
+# To compress file
+
+tar -czvf photos.tar.gz test1.png test2.png
+
+# To Extract tar.gz
+
+tar -xzvf photos.tar.gz
+
+# To view the contents of tar.gz without extracting it
+
+tar -ztvf photos.tar.gz

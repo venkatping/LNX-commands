@@ -1,0 +1,11 @@
+# Find out which process is using a specific file:
+lsof example.txt
+
+# Identify network connections that are established by processes running on the system
+lsof -i
+
+# Monitor changes to a specific file in real-time
+lsof -r1 example.txt
+
+# Find out which processes have exceeded the maximum number of open files
+lsof -u <username> | awk '{print $2}' | sort | uniq -c | sort -n

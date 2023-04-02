@@ -1,0 +1,145 @@
+nmcli connection show
+nmcli con show
+nmcli conn show
+nmcli dev status
+nmcli con up 'Wired connection 1'
+
+#viewing a terse output
+nmcli -t device
+=====================================================================================
+[root@minikube commands]# nmcli -t device
+enp0s3:ethernet:connected:enp0s3
+enp0s8:ethernet:connected:enp0s8
+virbr0:bridge:connected:virbr0
+docker0:bridge:unmanaged:
+lo:loopback:unmanaged:
+virbr0-nic:tun:unmanaged:
+[root@minikube commands]#
+======================================================================================
+
+#Specifying Fields in the output
+nmcli -f DEVICE,TYPE device
+======================================================================================
+[root@minikube commands]# nmcli -f DEVICE,TYPE device
+DEVICE      TYPE
+enp0s3      ethernet
+enp0s8      ethernet
+virbr0      bridge
+docker0     bridge
+lo          loopback
+virbr0-nic  tun
+[root@minikube commands]#
+======================================================================================
+
+#This output is better for scripting
+nmcli -t -f DEVICE,TYPE device
+======================================================================================
+[root@minikube commands]# nmcli -t -f DEVICE,TYPE device
+enp0s3:ethernet
+enp0s8:ethernet
+virbr0:bridge
+docker0:bridge
+lo:loopback
+virbr0-nic:tun
+[root@minikube commands]#
+======================================================================================
+
+#Viewing an output in pretty mode
+nmcli -p device
+======================================================================================
+[root@minikube commands]# nmcli -p device
+=====================
+  Status of devices
+=====================
+DEVICE      TYPE      STATE      CONNECTION
+------------------------------------------------------------------
+enp0s3      ethernet  connected  enp0s3
+enp0s8      ethernet  connected  enp0s8
+virbr0      bridge    connected  virbr0
+docker0     bridge    unmanaged  --
+lo          loopback  unmanaged  --
+virbr0-nic  tun       unmanaged  --
+[root@minikube commands]#
+======================================================================================
+
+#Checking the overall status of NetworkManager
+nmcli general status
+======================================================================================
+[root@minikube commands]# nmcli general status
+STATE      CONNECTIVITY  WIFI-HW  WIFI     WWAN-HW  WWAN
+connected  full          enabled  enabled  enabled  enabled
+[root@minikube commands]#
+======================================================================================
+
+#Checking the overall status of NetworkManager in terse mode
+nmcli -t -f STATE general
+======================================================================================
+[root@minikube commands]# nmcli -t -f STATE general
+connected
+[root@minikube commands]#
+======================================================================================
+#Viewing NetworkManager logging status
+nmcli general logging
+======================================================================================
+[root@minikube commands]# nmcli general logging
+LEVEL  DOMAINS                                                                                                                                                                                            
+INFO   PLATFORM,RFKILL,ETHER,WIFI,BT,MB,DHCP4,DHCP6,PPP,IP4,IP6,AUTOIP4,DNS,VPN,SHARING,SUPPLICANT,AGENTS,SETTINGS,SUSPEND,CORE,DEVICE,OLPC,INFINIBAND,FIREWALL,ADSL,BOND,VLAN,BRIDGE,TEAM,CONCHECK,DCB,DISPATCH,AUDIT,SYSTEMD,PROXY
+[root@minikube commands]#
+======================================================================================
+
+#Viewing all connections
+nmcli connection show
+nmcli conn show
+nmcli con show
+======================================================================================
+[root@minikube commands]# nmcli connection show
+NAME    UUID                                  TYPE      DEVICE
+enp0s3  75a9d0ae-09f6-4223-beb5-f4c3f4b77052  ethernet  enp0s3
+enp0s8  70468169-1c42-42bb-a17b-3f4ed4a4b0ee  ethernet  enp0s8
+virbr0  8e910bd2-31fa-43c2-a281-d8753aef7e81  bridge    virbr0
+[root@minikube commands]#
+======================================================================================
+
+#Viewing only currently active connections
+nmcli connection show --active
+======================================================================================
+[root@minikube commands]# nmcli connection show --active
+NAME    UUID                                  TYPE      DEVICE
+enp0s3  75a9d0ae-09f6-4223-beb5-f4c3f4b77052  ethernet  enp0s3
+enp0s8  70468169-1c42-42bb-a17b-3f4ed4a4b0ee  ethernet  enp0s8
+virbr0  8e910bd2-31fa-43c2-a281-d8753aef7e81  bridge    virbr0
+[root@minikube commands]#
+======================================================================================
+
+#Viewing only devices recognized by NetworkManager and their state
+nmcli device status
+nmcli dev status
+======================================================================================
+[root@minikube commands]# nmcli device status
+DEVICE      TYPE      STATE      CONNECTION
+enp0s3      ethernet  connected  enp0s3
+enp0s8      ethernet  connected  enp0s8
+virbr0      bridge    connected  virbr0
+docker0     bridge    unmanaged  --
+lo          loopback  unmanaged  --
+virbr0-nic  tun       unmanaged  --
+[root@minikube commands]#
+======================================================================================
+
+#Starting and Stopping a Network Interface Using nmcli
+#The nmcli connection down command, deactivates a connection from a device without preventing the device from further auto-activation. The nmcli device disconnect command, disconnects a device and prevent the device from automatically activating further connections without manual intervention.
+
+nmcli connection up id enp0s3
+nmcli connection down id enp0s3
+mcli dev disconnect bond0
+mcli dev connect bond0
+
+
+
+
+
+ 1051  nmcli connection
+ 1052  nmcli dev list
+ 1053  nmcli device list
+ 1057  nmcli -v
+

@@ -1,0 +1,46 @@
+# Locate Processes in a Directory
+fuser .
+
+# locate process running on home directory
+fuser /home
+
+# To Print more readable output. -v for verbose
+fuser -v .
+
+#Find processes accessing a file
+fuser -v /home/username/filename
+
+Under the ACCESS column, you will see access types signified by the following letters:
+
+c – current directory
+e – an executable file being run
+f – open file, however, f is left out in the output
+F – open file for writing, F is as well excluded from the output
+r – root directory
+m – mmap’ed file or shared library
+
+#Identify the process running on TCP port 22
+fuser -v -n tcp 22
+fuser -v 22/tcp
+
+# To list all files and processes running in the filesystem.
+fuser -v -m /var/log/messages
+-m flag with fuser to identify all processes accessing a filesystem by targeting a file belonging to that system
+The option, -m NAME or --mount NAME means name all processes accessing the file NAME.
+In case you a spell out directory as NAME, it is spontaneously changed to NAME/, to use any file system that is possibly mounted on that directory.
+
+# -k flag terminates processes
+fuser -v -k /home/filename
+
+# Kill Processes Interactively
+fuser -ki .
+
+# list the signals fuser known
+fuser -l
+fuser --list-signals 
+
+# To kill the process using TCP port 631 using the TERM signal
+fuser -ki -TERM -n tcp 631
+
+Another option is to use -5 as -[SIGNAL] and 631/TCP as the port name
+fuser -ki -5 -n tcp 22/tcp

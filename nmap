@@ -1,0 +1,43 @@
+#scan the ip range, here IP range is separated by a dash
+nmap 192.168.0.104-125
+
+#To see closed ports using nmap
+#-d: Increase debugging level (use -dd or more for greater effect)
+nmap -d -d <ipaddress>
+nmap -d -d 192.168.0.104
+
+#To scan a specific port or entire port range
+nmap -p 22 192.168.0.104
+
+#we can also scan all 65535 ports for your localhost computer by using this command
+nmap -p 1-65535 192.168.0.104
+
+#This is one of the most popular and easiest Nmap commands for host detection
+#it finds all devices in the defined range
+#This command sends an ICMP (Internet Control Message Protocol) echo request to all IP addresses of the network
+#The “-sP” command will scan the list of devices running on the 192.168.0.1/24 subnet
+#-s scan
+nmap -sP 192.168.0.1/24
+
+#To save the result of the Nmap scan to a file or XML
+#This command will export Nmap scan into a text file
+#-oN, -oX Output scan in normal, XML
+nmap -oN output.txt example.com
+#This command will save the output of Nmap scanning in XML
+nmap -oX output.xml example.com
+
+#To scan the fixed number of most popular ports
+#In our example, we have used the “–top-ports” option to specify that we need to scan the top 15 ports of the IP address 196.168.0.104
+nmap -top-ports 15 192.168.0.104
+
+#To detect open ports
+#we are using “–open” parameter with IP address 198.68.0.104 so that the Nmap command only shows us the ports with the open state
+nmap -open 192.168.0.104
+
+#To exclude the host/IP addresses for the scan
+nmap 192.168.0.1/24 -exclude 192.168.0.105
+
+#Detection of services
+#Nmap has a database of more than 2000 services and associated ports for example– SSH(port 22) and HTTP (port 80). So while doing network inventories if you want to know which versions are running, you can use the Nmap version detection (-sV) command. Knowing the exact version number can be really helpful while finding which exploits your server is vulnerable to. 
+#we are performing a version scan by using the “sV” command and it will give us a list of services with its versions
+nmap -sV 192.168.0.104

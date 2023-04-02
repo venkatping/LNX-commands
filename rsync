@@ -1,0 +1,30 @@
+Copy file from localhost to remote host:
+---------------------------------------
+
+#rsync /home/simple.txt root@192.168.1.1:/home
+
+Pull file from remote host to localhost:
+----------------------------------------
+
+#rsync root@192.168.1.1:/home/simple.txt /home
+
+
+Directory Transfter:
+--------------------
+
+-d --> only to copy directory
+-r --> copy dirrectory and its contents recursively
+-t --> This option will copy the date and time that the file was last changed
+-l --> symlinks
+--progress --> we can also use this option to show copy progress
+
+#rsync -rt /home/ansible root@192.168.1.1:/tmp
+
+Syncing files with rsync:
+------------------------
+
+#rsync -rtu --delete SOURCE root@x.x.x.x:/DESTINATION
+
+-r and -t is for recursive and date and time when the file was last changed
+-u option tells rsync to update only different/changed/added files from the SOURCE to DESTINATION
+--delete will remove any files from the DESTINATION that the source may no longer have

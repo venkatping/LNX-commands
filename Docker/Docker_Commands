@@ -1,0 +1,15 @@
+1. List docker images
+# docker images
+
+2. List Running containers
+# docker ps
+
+3. List Running and stopped containers
+# docker ps -a
+
+4. check docker version
+# docker -v	==> Display single Line Output
+# docker version ==> Display Detailed output
+
+5. Remove stopped containers
+# docker rm <container_ID> or docker rm <container_name>

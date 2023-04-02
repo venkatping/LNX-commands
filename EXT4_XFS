@@ -1,0 +1,6 @@
+1. Ext4 supports partition size up to 1 EiB(exbibytes) and file size up to 16 TiB(tebibyte)
+2. XFS supports partition size and file size up to 8 EiB(exbibytes)
+3. Please note that XFS is a 64-bit file system. When the host operating system is 32-bit, XFS only supports partition size and file size up to 16 TiB(tebibyte)
+
+1. Red Hat’s maximum supported size for Ext4 is 16TB in both Red Hat Enterprise Linux 5 and Red Hat Enterprise Linux 6, and 50TB in Red Hat Enterprise Linux 7
+2. Red Hat’s maximum supported XFS file system image is 100TB for Red Hat Enterprise Linux 5, 300TB for Red Hat Enterprise Linux 6, and 500TB for Red Hat Enterprise Linux 7

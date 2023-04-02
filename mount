@@ -1,0 +1,6 @@
+cat /proc/self/mounts | egrep "EXT|xfs"
+mount -t cifs //IPadress/path/to/dir      /whre/to/mount -o username=rahul,domain=coglitter
+mount -t nfs ipaddress:/mountpoint	/whre/to/mount
+cat /proc/mounts | grep ro,
+sudo mount -o remount,nosuid /dev/shm
+mount -av

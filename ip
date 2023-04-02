@@ -1,0 +1,44 @@
+ip a sh dev enp0s3
+
+#To down an interface
+ip link set enp0s3 down
+
+#To up an interface
+ip link set enp0s3 up
+
+#show all ip address
+ip address show
+
+#show specific ip address
+ip address show enp0s3
+
+#It is used to display link layer information, it will fetch characteristics of the link layer devices currently available. Any networking device which has a driver loaded can be classified as an available device
+ip link
+
+#To show statistics of various interfaces use -s option
+ip -s link
+ip -s link show enp0s3
+
+#This command helps you to see the route packets your network will take as set in your routing table. The first entry is the default route
+ip route
+ip r l
+
+#delete default gw
+route del default gw 192.168.0.1 dev enp0s3
+ip route delete default
+
+#Add default gw
+route add default gw 192.168.0.1 dev enp0s3
+
+#delete ip address
+ip addr del 192.168.0.104/24 dev enp0s3
+
+#add ip address
+ip addr add 192.168.0.104/24 dev enp0s3
+
+#add route entry, here 192.168.0.0 is a destination(not recommended)
+ip route add 192.168.0.0/24 dev enp0s3
+
+
+To reject routing to a particular host or network
+route add -host 192.168.1.51 reject

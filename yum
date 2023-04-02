@@ -1,0 +1,36 @@
+yum module list
+vi /etc/yum/pluginconf.d/product-id.conf
+vi /etc/yum/pluginconf.d/subscription-manager.conf
+cd /etc/yum.repos.d/
+cd /var/cache/dnf/
+rm -rf *
+find /var/cache/dnf -name *modules.yaml*
+
+#yum configuration file
+cat /etc/yum.conf
+
+#remove cached data
+yum clean all
+
+#Generate the metadata cache
+yum makecache
+
+#list the modules of yum
+yum module list
+
+#disable one or more repositories (wildcards allowed)
+yum repolist --disablerepo=docker*
+
+#Disable all repos
+yum-config-manager --disable \*
+
+#add repo using an http url
+yum-config-manager --add-repo repository_url
+
+#list repos
+yum repolist all
+
+#disable all repos and enable particular repo
+yum --disablerepo=* --enablerepo=epel update
+
+yum whatprovides <command_name> #example cp mv ansible...

@@ -1,0 +1,26 @@
+chronyc sourcestats -v
+server 192.168.1.73 iburst
+cat /var/log/messages | grep -i chronyd
+chronyc tracking
+chronyc -a makestep
+chronyc -a 'burst 4/4'
+chronyc sources
+chronyd -q 'server 0.europe.pool.ntp.org iburst'       --> Testing chrony
+
+systemctl status chronyd
+parameter:
+
+server 192.168.1.73 iburst
+maxdistance 16.0
+
+chronyc sources: This command displays a list of the NTP servers that your system is currently synchronizing with.
+
+chronyc tracking: This command displays information about the current clock offset, jitter, and frequency error.
+
+chronyc makestep: This command forces the system clock to be stepped immediately to match the NTP server, rather than adjusting the clock gradually over time.
+
+chronyc settime: This command sets the system clock to a specific time. You can specify the time in several different formats, such as YYYY-MM-DD HH:MM:SS.
+
+chronyc -a "offline <server>": This command marks an NTP server as offline, which prevents the system from synchronizing with it. Replace <server> with the hostname or IP address of the server.
+
+chronyc -a "online <server>": This command marks an NTP server as online, which allows the system to synchronize with it. Replace <server> with the hostname or IP address of the server.

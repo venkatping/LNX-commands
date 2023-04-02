@@ -1,0 +1,12 @@
+#To remove the logical volume
+lvremove test_vg/test_lv
+
+#To forcefully remove the logical volume
+lvremove -f test_vg/test_lv
+lvremove --force test_vg/test_lv
+
+#To disable udev synchronization
+lvremove --noudevsync
+
+#To remove all logical volumes under any VG
+lvremove test_vg

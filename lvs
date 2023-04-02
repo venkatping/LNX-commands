@@ -1,0 +1,52 @@
+#configuration file
+/etc/lvm/lvm.conf
+
+#list all lvm
+lvs --all
+
+#shows only lv name
+lvs -o lv_name
+
+#shows only devices
+lvs -o devices
+
+#shows only segtype
+lvs -o lv_name,devices,segtype
+
+#To string to use to separate each column
+lvs --separator='|'
+lvs --aligned --separator='|'
+
+#To produce output immediately without sorting or aligning the columns properly
+lvs --unbuffered 
+
+#unquoted used with –nameprefixes, output values in the field=value pairs are not quoted
+lvs --unquoted --nameprefix
+lvs --unquoted
+
+#output columns as rows
+lvs --rows 
+
+#sort lvs output with size
+lvs --sort lv_size
+
+#To use default columns that emphasize segment information
+lvs --segments
+
+#To comma-separated ordered list of columns
+lvs -o
+lvs --options
+
+#To suppress the suffix on output sizes
+lvs --nosuffix
+
+#To Suppress the headings line that is normally the first line of output
+lvs --noheadings
+
+#To Add an “LVM2_” prefix plus the field name to the output
+lvs --nameprefixes
+
+
+
+lvs -o+devices,lv_size
+/sbin/lvs --nameprefixes --noheadings --separator='|' -a -o lv_name,lv_size,lv_attr,mirror_log,vg_name,devices,region_size,data_percent,metadata_percent,segtype,seg_monitor --config="global{locking_type=0}"

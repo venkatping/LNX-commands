@@ -1,0 +1,65 @@
+#Here, the action command -print0 enables printing of the full file path on the standard output, followed by a null character and -0 xargs flag effectively deals with space in filenames
+find / -name "shellscripting" -type d -print0| xargs -0
+
+# To create multiple directories
+echo "dir1 dir2" | xargs mkdir
+
+# To Remove multiple directories
+echo "dir1 dir2" | xargs rm -r
+
+# To Remove Multiple Files using find with xargs
+find . -type f -name "*.sh" | xargs rm
+
+# To Create 1000 files
+seq 1000 | xargs touch
+
+# To remove multiple "txt" file
+ls "*.txt" | xargs rm
+
+# However, xargs does not automatically include files which contain blank spaces in their names for example: "example file.sh". To include those files too, use the -print0 option for find, and the -0 option for xargs
+find . -type f -name "*.sh" -print0 | xargs -0 rm
+
+# Run Multiple commands at same time
+cat file.txt | xargs -I {} sh -c "echo {};mkdir {}"
+
+# To read the contents of a file in single line
+xargs -a file.txt
+
+# To see the commands executed by xargs in standard output, use the -t option
+echo "dir1 dir2 dir3" | xargs -t mkdir
+echo "dir1 dir2 dir3" | xargs -t rm -r
+[root@minikube test]# echo "dir1 dir2 dir3" | xargs -t mkdir
+mkdir dir1 dir2 dir3
+[root@minikube test]# echo "dir1 dir2 dir3" | xargs -t rm -r
+rm -r dir1 dir2 dir3
+[root@minikube test]#
+
+# Use xargs with the grep command to search for a string in the list of files provided by the find command.
+find / -name "*.sh" -type f | xargs grep -i cpu
+
+# prompt for approval to execute a command
+echo "photos.tar.gz" | xargs -p rm
+[root@minikube test]# echo "photos.tar.gz" | xargs -p rm
+rm photos.tar.gz ?...y
+[root@minikube test]#
+
+# List all user accounts in single line
+cat /etc/passwd | cut -d : -f1 | sort | xargs
+
+# Limit output per line, Sometimes it is necessary to control the number of arguments xargs takes at the same time, In the example below, xargs takes the string from the echo command and splits it into three. Then it executes another echo for each of the parts
+echo "1 2 3 4 5 6 7 8 9" | xargs -n 3
+
+# Specify the Delimiter, The default xargs delimiter is a blank space. To change the default delimiter, use the -d command followed by a single character or an escape character such as n
+echo  "folder*folder1*folder2" | xargs -d* | xargs mkdir
+
+#remove unnecessary blank space
+echo "      line       with     spaces" | xargs
+[root@minikube test]# echo "      line       with     spaces" | xargs
+line with spaces
+[root@minikube test]#
+
+# The example below instructed the ls command to pipe to xargs only the files containing the word “example”. xargs then applied wc to that list:
+ls *example* | xargs wc
+
+# Copy File to Multiple Directories
+echo /tmp /home/ansible | xargs -n 1 -p cp -v file.txt

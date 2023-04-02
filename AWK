@@ -1,0 +1,103 @@
+ansible@ubuntu-c:~/ansible$ awk 'BEGIN {print "HELLO WORLD" }'
+HELLO WORLD
+ansible@ubuntu-c:~/ansible$ date
+Sat Aug  6 04:37:44 UTC 2022
+ansible@ubuntu-c:~/ansible$ date | awk '1'
+Sat Aug  6 04:37:58 UTC 2022
+ansible@ubuntu-c:~/ansible$ date | awk '"HELLO WORLD"'
+Sat Aug  6 04:38:24 UTC 2022
+ansible@ubuntu-c:~/ansible$ date | awk '{print}'
+Sat Aug  6 04:38:43 UTC 2022
+ansible@ubuntu-c:~/ansible$ awk -F: '{print $1}' /etc/passwd
+cat /etc/passwd | awk 'BEGIN{FS=":"} {print $1,$2}'
+cat /etc/passwd | awk -F : '{print $1}'
+cat /etc/passwd | awk -F : '{print "ok","awk command"}'
+cat /etc/passwd | awk -F : 'NR==3 {print $1,$2}'
+cat test.txt | awk '{print NR,$1,$2}' --> if you want to have line number use NR
+cat /etc/passwd | awk '{print NF}'	--> No.of fields of each line
+cat /etc/passwd | awk -F : 'NR==3 {print $1,$2}'
+cat /etc/passwd | awk '{print "The line number is: ",NR "The number of fields in a line is: ", NF}'
+cat /etc/passwd | awk -F : '{print $NF}' --> to get last field of each line
+cat /etc/passwd | awk '{print FILENAME}' --> FILENAME will give the cureent file name which you are working
+cat /etc/passwd | awk '{print FILENAME,$1}' --> FILENAME will give the cureent file name which you are working and also print first column of each line
+awk 'NR>=3 {print $0}' /etc/passwd
+awk '/root/ {print $0}' /etc/passwd
+awk '{print "ok"} ' /etc/passwd	--> it will print every line of a file as ok
+awk '{print "1"} ' /etc/passwd --> it will print every line as 1
+awk '{print NR} ' /etc/passwd --> it will print only line numbers without any data
+awk '{print NR,$0} ' /etc/passwd --> it will print line numbers and data
+awk 'BEGIN {print "====STARTING AWK SCRIPT===="} /root/ {print $0} END {print "====ENDING AWK SCRIPT===="}' /etc/passwd
+~$ cat myawk.awk 
+BEGIN {
+        print "====STARTING AWK SCRIPT===="
+}
+/root/ {
+        print $0
+}
+END {
+        print "====ENDING AWK SCRIPT===="
+}
+~$
+
+ansible@ubuntu-c:~$ cat helloworld.awk 
+#!/bin/awk -f
+BEGIN {
+        print "Hello World!"
+}
+ansible@ubuntu-c:~$ ./helloworld.awk 
+Hello World!
+ansible@ubuntu-c:~$ 
+
+
+defining and printing variables
+
+awk 'BEGIN { a=5 ; print a }'
+
+ansible@ubuntu-c:~$ echo "Hello Tom" | awk '{$2="Adam";print $0}'
+Hello Adam
+ansible@ubuntu-c:~$ 
+
+ansible@ubuntu-c:~$ awk -F : '{print $1 " home at " $6}' /etc/passwd
+
+awk -F : '{print $1 "\t\t" $6}' /etc/passwd
+
+ansible@ubuntu-c:~$ awk '{print $0}' myfile
+This is a test file
+This is something else
+ansible@ubuntu-c:~$ awk '{print "Report Title"} {print $0}' myfile
+Report Title
+This is a test file
+Report Title
+This is something else
+ansible@ubuntu-c:~$ awk 'BEGIN {print "Report Title"} {print $0}' myfile
+Report Title
+This is a test file
+This is something else
+ansible@ubuntu-c:~$ 
+
+[root@minikube ~]# echo "2 6" | awk ' {print "a=" $1 , "b=" $2}'
+a=2 b=6
+[root@minikube ~]# echo "2 6" | awk '{ a=$1 ; b=$2 ; print "a=" a , "b=" b }'
+a=2 b=6
+[root@minikube ~]#
+
+
+[root@minikube ~]# ./awk.awk ab.txt
+printing a and b values
+a=2 b=6
+completed reading a and b values
+[root@minikube ~]# cat awk.awk
+#!/bin/awk -f
+BEGIN {
+print "printing a and b values"
+}
+{
+a=$1
+b=$2
+print "a="a,"b="b
+}
+END {
+print "completed reading a and b values"
+}
+[root@minikube ~]#
+

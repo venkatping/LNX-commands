@@ -1,0 +1,59 @@
+How to identify defunct process?
+********************************************************************************************************************************************************************
+Zombie processes aren't really processes they are the leftover bits of dead processes that haven't been cleaned up properly by their parent process
+
+for x in `seq 1 2 14`; do ps -eo state,pid,cmd | grep "^D"; echo "----"; sleep 5; done
+
+seq 1 1 3 means
+
+1 -> First value
+2 -> Increment==> like 1 3 5 7 9 11
+3 -> Last Value
+
+1 2 14 means 1 3 5 7 9 11 13 and stops
+********************************************************************************************************************************************************************
+How to findout top memory consuming process?
+
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head -n 20
+********************************************************************************************************************************************************************
+ps -ef			:	List all running processes on the system
+
+ps -u username	:	List all processes for a specific user
+
+ps axjf			:	Display the process hierarchy as a tree
+
+ps aux --sort=-%cpu	:	List processes sorted by CPU usage
+********************************************************************************************************************************************************************
+
+
+
+a      Lift the BSD-style "only yourself" restriction, which is imposed upon the set of all processes when some BSD-style (without "-") options are used or when
+       the ps personality setting is BSD-like.  The set of processes selected in this manner is in addition to the set of processes selected by other means.  An
+       alternate description is that this option causes ps to list all processes with a terminal (tty), or to list all processes when used together with the x
+       option.
+
+-A     Select all processes.  Identical to -e.
+
+-a     Select all processes except both session leaders (see getsid(2)) and processes not associated with a terminal.
+
+-d     Select all processes except session leaders.
+
+--deselect
+              Select all processes except those that fulfill the specified conditions (negates the selection).  Identical to -N.
+
+-e     Select all processes.  Identical to -A.
+
+-N     Select all processes except those that fulfill the specified conditions (negates the selection).  Identical to --deselect.
+
+T      Select all processes associated with this terminal.  Identical to the t option without any argument.
+
+r      Restrict the selection to only running processes.
+
+x      Lift the BSD-style "must have a tty" restriction, which is imposed upon the set of all processes when some BSD-style (without "-") options are used or
+       when the ps personality setting is BSD-like.  The set of processes selected in this manner is in addition to the set of processes selected by other means.
+       An alternate description is that this option causes ps to list all processes owned by you (same EUID as ps), or to list all processes when used together
+       with the a option.
+
+-o      Specify user-defined format.  Identical to -o and --format
+
+e      Show the environment after the command

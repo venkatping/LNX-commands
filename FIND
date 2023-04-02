@@ -1,0 +1,138 @@
+# search for a file
+find / -type f -iname "sshd_config"
+find / -iname "sshd_config" -type f
+
+# search for a directory
+find / -iname "test" -type d
+find / -type d -name test_dir
+
+# search both files and directories
+find / -iname test
+
+# search for a all link
+find / -type l
+
+# search for a specific link
+find / -type l -name vgabios-vmware.bin
+
+# search files with their extension "*.png", mandatory to use double quotes
+find / -iname "*.png" -type f
+
+# Search for multiple files with multiple extensions, -o option that works as logical OR condition
+find / -type f -name "*.png" -o -name "*.txt"
+
+# find empty files and directories
+find . -empty
+find . -empty -type f
+find . -empty -type f -name "*.cpp"
+
+# search for file that ends with *.txt and delete them
+find . -type f -name "*.txt" -delete
+
+# search for file that ends with *.txt and rm them one by one
+find . -type f -name "*.jpg" -exec rm {} \;
+
+# search for files that ends with jpg and rm them all at once
+find . -type f -name "*.txt" -exec rm {} +
+
+# Delete a directory
+find /tmp -type d -name test -exec rm -r {} \;
+find /tmp -type d -name test -exec rm -rf {} \;
+
+# Find files of exactly 50 KB in size
+find / -size 50k
+
+# To search for files bigger than 1 GB in the current directory
+find / -size +1G
+
+# To find smaller than 20 bytes
+find . -size -20c
+
+# To find files bigger than 100 MB but smaller than 2 GB in size
+find / -size +100M -size -2G
+
+# search for all files with name ending in .log but size greater than 500 MB
+find / -size +500M -name "*.log"
+
+c: bytes
+k: kilobytes
+M: Megabytes
+G: Gigabytes
+
+ctime mtime atime mmin amin cmin
+
+# To find all the files modified within 3 days (3*24H), use:
+find . -type f -mtime -3
+
+# To find all the files created at least 5 days (5*24H) ago, use:
+find . -type f -ctime +5
+
+# To find all the files that were modified in the last 5 minutes
+find . -type f -mmin -5
+
+# search for all the .java files that have been modified between last 20 to 30 minutes
+find . -type f -mmin +20 -mmin -30 -name "*.java"
+
+# find all the files access mode 777 in the current directory
+find . -perm 777
+
+# To find all files with access of read and write for all (exact match, it won't match if the file has execute permission for all):
+find . -perm a=r+w
+
+# find files owned by the user docker in the current directory, use
+find / -type f -user docker
+
+# You can also combine it with other options like size, time and name
+find . -type f -user John -name "*.cpp"
+
+#By default, the find command searches recursively in all the subdirectories of your current location. If you don't want that, you can specify the depth of your search to 1. This will restrict the search to only the current directory and excludes any subdirectories.
+find . -maxdepth 1 -type f -name "*.txt"
+
+# Using find and exec
+find / -type f -name "*.txt" -exec ls -l {} + | wc -l (or)  find / -type f -name "*.txt" -exec ls -l {} \; | wc -l
+Here, ; is used instead of the + sign. The additional \ before ; is used to escape the special character ;.
+The advantage of {} + is that it runs fewer commands as ls -l file1 file2 file3 whereas {} \; will run ls -l file1, ls -l file2 etc.
+But, {} \; has the advantage of using {} more than once in the same exec statement. For example, the command below will rename all the found files with .old extension.
+find /tmp -empty -type f -name "*.txt" -exec mv {} {}.old \;
+
+# using xargs
+find . -type f -name *.txt" | xargs ls -l
+
+# Combining find and grep
+find . -type f -name "*.txt" -exec grep -i alice {} +
+find . -type f -name "*.txt" | xargs grep -i alice
+
+# Search for particular users files
+find / -user redhat
+
+# search for particular users directory
+find / -user redhat -type d
+
+# search for partiuclat permissions of files
+find / -perm 400 -type f
+
+# search for particular permissions of directories
+find / -perm 700 -type d
+
+# search for directories that do not have 400 permissions
+find . -not -perm 400
+find . ! -perm 400
+
+# find all the files and directories with specific groupname
+find / -group groupname
+find . -group aruna -perm 400 #group option with permissions
+
+# find the files that do not belong to the sudo group
+find . -not -group sudo
+
+# search for all files that are modified after the notes.txt
+find . -newer notes.txt
+
+# find the files that were accessed within the last 30 minutes
+
+# search for all empty files and directories
+find . -empty
+find . -type d -empty
+
+# search the files whose names start with the letter "t"
+find / -regex ".t.*"

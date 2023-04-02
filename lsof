@@ -1,0 +1,33 @@
+lsof				:	List all open files:
+
+lsof -u username		:	List all open files for a specific user
+
+lsof -p PID			:	List all open files for a specific process ID
+
+lsof /path/to/directory	:	List all open files for a specific directory
+
+lsof -i :portnumber	:	List all open files for a specific port
+
+lsof -i @ipaddress	:	List all open files for a specific IP address
+
+lsof -i tcp|udp		:	List all open files for a specific protocol (TCP or UDP)
+
+lsof +L1			:	List all open files that have been deleted but are still in use
+
+lsof /path/to/library	:	List all open files that are using a specific library
+
+lsof -u username -p PID	:	List all open files for a specific user and process ID
+
+lsof -i -P -n | grep LISTEN	:	list the 
+
+-n       inhibits the conversion of network numbers to host names for network files.  Inhibiting conversion may
+                make lsof run faster.  It is also useful when host name lookup is not working properly.
+
+-P       inhibits  the  conversion  of port numbers to port names for network files.  Inhibiting the conversion
+                may make lsof run a little faster.  It is also useful when port name lookup is not working properly.
+-i [i]   selects  the listing of files any of whose Internet address matches the address specified in i.  If no
+                address is specified, this option selects the listing of all Internet and x.25 (HP-UX) network files.
+
+-i select IPv[46] files
+-P no port names
+-n no host names

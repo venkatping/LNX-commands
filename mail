@@ -1,0 +1,2 @@
+echo "Subject: sendmail test" | sendmail -i -v -Am chkkkkkkkkkk@gmail.com
+echo "Subject: sendmail test" | mail -s <subject> chkkkkkkkkkkk@gmail.com

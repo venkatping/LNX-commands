@@ -1,0 +1,143 @@
+SED command in unix stands for STREAM EDITOR. This can be used to perform lots of functions like searching/replacing/find/insertion/deletion
+
+sed 's/Python/python/' python.txt	--> This command will replace Python as python if Python word is available as first word of every line
+sed 's/Python/python/g' python.txt	--> This command will replace Python as python in complete file
+sed 's/Python/python/2g' python.txt	--> it will replace from second match word in every line(it can be any match instances of from second)
+sed '2 s/Python/python/' python.txt	--> This will replcase only Python instance of first word in second line
+sed '2 s/Python/python/g' python.txt	--> This will replcase Python instance of all words in second line
+sed '2d' python.txt			--> if i want to remove second line of a file
+sed '$d' python.txt			--> if i want to remove last line of a file
+sed '1,20d' python.txt			--> if i want to remove first 20 lines of a file
+sed '13,30d' python.txt			--> if i want to remove 13th line to 30th line of a file
+sed '/learn/d' python.txt		--> if i want to remove line which consists of "learn" word
+sed -i.bak '/popular/d' python.txt	--> it is used to save changes permanent to file and takes original file as backup
+sed -i '/popular/d' python.txt		--> it is used to save changes permanent to file
+-i --in-place is used to make changes permanent to the file
+sed -e '$s/Python/Bash/' python.txt	--> Replace the last match in a file with new text
+sed -n -e '1,4p' -e '6,10p' sshd_config	--> use -e option to make multiple selections. -e means expression
+sed -n '1,4p' sshd_config		--> -n means quiet
+sed -n '1~2p' coleridge.txt		--> The first number indicates the starting line. The second number tells sed which lines after the starting line we want to see. The number 2 means every second line, 3 means every third line, and so on.
+sed 's|/etc/||' /tmp/path.txt
+sed -e 's/^Hypertext/#&/' language.txt	--> it will put # infront Hypertext where the line starts with Hypertext
+sed -e 's/^Hypertext$/#&/' language.txt --> Here $ means end of the line, it will put # infront Hypertext wherever there is a WORD Hypertext, which the line has only Hypertext word and no other words are available
+
+sed -n '' quote.txt			--> it will not print any output because we didn't mentioned any value inside quotes
+sed -e ' ' -e 'p' quote.txt		--> it will print same lines with two times
+sed -e ' ' -e ' ' quote.txt		--> it will print output with one time
+sed -e ' ' -e 'p' -e 'p' quote.txt	--> it will print output with three times
+sed -n -f commands quote.txt		--> commands file content is "p" --> when i executed this command it will print output for one time
+sed -n 'p' quote.txt			--> it is same as above command
+sed -n '3p' books.txt			--> it will print third lines
+sed -n '2,5 p' books.txt		--> it will print from second line to 5th line
+sed -n '2,5p' books.txt			--> it will print from second line to 5th line
+sed -n '$p' books.txt			--> it will print the last line of the file
+sed -n '2,$p' books.txt			--> it will print from 2nd line to last line of the file
+sed -n '1,+4p' books.txt		--> it will print next 4lines starting from 1st line
+sed -n '4,+1p' books.txt		--> it will print next one line starting from 4th line
+sed -n '1~2p' books.txt			--> It indicates that SED should start at line number M and process every n(th) line
+sed -n '1~5p' books.txt			--> it prints 1st line and then 6th and 11th line
+sed -n '1~4p' books.txt			--> it prints 1st line and then 5th and 9th line
+sed -n '1~4 p' books.txt		--> same as above command, it prints 1st line and then 5th and 9th line
+sed -n '2~2 p' books.txt		--> prints 2,4,6,8,10 lines
+sed -n '2~4 p' books.txt		--> prints 2,4,6,8,10 lines
+sed -n '/Paulo/ p' books.txt		--> it will print lines that have match word "Paulo"
+sed -n '/Alchemist/ p' books.txt	--> it will print lines that have match word "Alchemist"
+sed -n '/Alchemist/, 5p' books.txt	--> it will print lines that have match word "Alchemist" and also prints to 5th line
+sed -n '/SELINUX/p' /etc/selinux/config					--> print SELINUX line in config file
+sed 's/SELINUX\=disabled/SELINUX\=permissive/' /etc/selinux/config	--> it will change from disabled to permissive in selinux config file
+sed -n '/\#Port/ p' /etc/ssh/sshd_config				--> it will print Port line ssh config file
+sed -n '/\#Port 22/ p' /etc/ssh/sshd_config				--> it will print Port 22 line ssh config file
+sed  's/\#Port 22/Port 22/' /etc/ssh/sshd_config			--> it will uncomment Port 22 line
+sed 'd' books.txt			-->	deletes all the lines in a file
+sed '4d' books.txt			-->	deletes 4th line
+sed '/Paulo Coelho/d' books.txt		-->	Delete a line using match keyword
+sed '4d' books.txt			-->	Delete 4th line
+sed '2, 4 d' books.txt			-->	Delete lines from 2nd to 4th line
+sed '/Storm/,/Fellowship/d' books.txt	-->	it will delete lines from storm to fellowship keywords
+sed -n 'w books.bak' books.txt		--> 	it created backup of books.txt file
+sed -n '2~2 w junk.txt' books.txt	-->	it creates junk.txt file with even lines which means 2nd 4th 6th lines
+sed -n -e '/Martin/ w Martin.txt' -e '/Paulo/ w Paulo.txt' -e '/Tolkien/ w Tolkien.txt' books.txt
+sed '4 a 7) Adultry, Paulo Coelho, 234' books.txt	--> it will append the mentioned line after 4th line
+sed '$ a 7) Adultry, Paulo Coelho, 234' books.txt	--> it will append the mentioned line after last line
+sed '/The/ a 7) Adultry, Paulo Coelho, 234' books.txt	--> it will append the mentioned line below the matched word "The"
+sed '3 c 3) Adultry, Paulo Coelho, 324' books.txt	--> it will replace the third line with mentioned content
+sed '$ c 3) Adultry, Paulo Coelho, 324' books.txt	-->	it will replace the last line with mentioned content
+sed '/The Alchemist/ c 3) Adultry, Paulo Coelho, 324' books.txt		--> it will replace the line which have "The Alchemist" with mentioned content
+sed '4 i 7) Adultry, Paulo Coelho, 324' books.txt	--> insert line in 4th line
+sed '1 i 7) Adultry, Paulo Coelho, 324' books.txt	--> insert line in 1st line
+sed '$ i 7) Adultry, Paulo Coelho, 324' books.txt	--> insert line in last line
+
+https://api.onex-aura.com/api/sms?key=jDFjpfPv&to=9810485559&from=HITPAI&body=Your OTP to submit CBoI data is sent - HITPA
+
+
+export http_proxy=10.10.110.12:9090
+export https_proxy=10.10.110.12:9090
+export HTTP_PROXY=10.10.110.12:9090
+export HTTPS_PROXY=10.10.110.12:9090
+
+
+
+
+
+
+
+
+
+
+
+[root@minikube sed]# cat books.txt
+1) A Storm of Swords, George R. R. Martin, 1216
+2) The Two Towers, J. R. R. Tolkien, 352
+3) The Alchemist, Paulo Coelho, 197
+4) The Fellowship of the Ring, J. R. R. Tolkien, 432
+5) The Pilgrimage, Paulo Coelho, 288
+6) A Game of Thrones, George R. R. Martin, 864
+
+#it will print from matched "The" to the end of the file
+[root@minikube sed]# sed -n '/The/, $p' books.txt
+2) The Two Towers, J. R. R. Tolkien, 352
+3) The Alchemist, Paulo Coelho, 197
+4) The Fellowship of the Ring, J. R. R. Tolkien, 432
+5) The Pilgrimage, Paulo Coelho, 288
+6) A Game of Thrones, George R. R. Martin, 864
+
+#it will print from matched "The" to the 5th line
+[root@minikube sed]# sed -n '/The/, 5p' books.txt
+2) The Two Towers, J. R. R. Tolkien, 352
+3) The Alchemist, Paulo Coelho, 197
+4) The Fellowship of the Ring, J. R. R. Tolkien, 432
+5) The Pilgrimage, Paulo Coelho, 288
+
+#we can also match two words, it will print the matched "Two" to matched "Pilgrimage"
+[root@minikube sed]# sed -n '/Two/, /Pilgrimage/ p' books.txt
+2) The Two Towers, J. R. R. Tolkien, 352
+3) The Alchemist, Paulo Coelho, 197
+4) The Fellowship of the Ring, J. R. R. Tolkien, 432
+5) The Pilgrimage, Paulo Coelho, 288
+
+#it will print from matched "Two" to another 4lines
+[root@minikube sed]# sed -n '/Two/, +4 p' books.txt
+2) The Two Towers, J. R. R. Tolkien, 352
+3) The Alchemist, Paulo Coelho, 197
+4) The Fellowship of the Ring, J. R. R. Tolkien, 432
+5) The Pilgrimage, Paulo Coelho, 288
+6) A Game of Thrones, George R. R. Martin, 864
+
+#it will print from matched "Two" to another 3 lines
+[root@minikube sed]# sed -n '/Two/, +3 p' books.txt
+2) The Two Towers, J. R. R. Tolkien, 352
+3) The Alchemist, Paulo Coelho, 197
+4) The Fellowship of the Ring, J. R. R. Tolkien, 432
+5) The Pilgrimage, Paulo Coelho, 288
+[root@minikube sed]#
+
+[root@minikube sed]# sed '4d' books.txt
+1) A Storm of Swords, George R. R. Martin, 1216
+2) The Two Towers, J. R. R. Tolkien, 352
+3) The Alchemist, Paulo Coelho, 197
+5) The Pilgrimage, Paulo Coelho, 288
+6) A Game of Thrones, George R. R. Martin, 864
+[root@minikube sed]#
+
+
+keytool -import -alias tomcat -keystore cacerts -file Aurassl.cer

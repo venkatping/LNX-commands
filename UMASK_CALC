@@ -1,0 +1,70 @@
+The default umask value of root user is 022
+The default umask value of normal user is 002
+
+The base permissions of a directory in linux is 777
+The base permissions of a file in linux is 666
+
+***************************************************************
+octal format of file permissions
+--------------------------------
+
+rwx means 7
+r means 4
+w means 2
+x means 1
+rw means 6
+rx means 5
+wx means 3
+
+***************************************************************
+
+************************************************************************************************************************************************************
+The default umask value of normal user is 002
+The base permissions of a file in linux is 666
+The base permissions of a directory in linux is 777
+
+666(base permissions)-002(umask value of file for normal user) = 664(whenever you create a file using normal user its permission would be 664)
+
+
+if you would like to change it calculate as per below:
+======================================================
+
+UMASK VALUE OF NORMAL USER: 002
+666-007 = 659
+777-007 = 770
+
+		file(666)	directory(777)
+0		rw-		rwx
+1		r-x		rw-
+2		r--		r-x
+3		-wx		r--
+4		-w-		-wx
+5		--x		-w-
+6		none		none
+************************************************************************************************************************************************************
+
+************************************************************************************************************************************************************
+The default umask value of root user is 022
+The base permissions of a file in linux is 666
+The base permissions of a directory in linux is 777
+
+666(base permissions)-022(umask value of file for normal user) = 644(whenever you create a file using normal user its permission would be 644)
+UMASK VALUE OF ROOT USER: 022
+
+if you would like to change it calculate as per below:
+======================================================
+
+UMASK VALUE OF NORMAL USER: 022
+
+666-027 = 659
+777-027 = 750
+
+		file(666)	directory(777)
+0		rw-		rwx
+1		r-x		rw-
+2		r--		r-x
+3		-wx		r--
+4		-w-		-wx
+5		--x		-w-
+6		---		--x
+7		none		---

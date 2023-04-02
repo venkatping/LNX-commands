@@ -1,0 +1,80 @@
+1. The crm status command is used to display the status of the Pacemaker cluster. It shows the resources that are managed by the cluster and their current state, as well as the nodes that are part of the cluster and their statu
+
+# crm status
+# crm resource status ==> To check only resource status
+
+2. The crm configure show command displays the current cluster configuration in the CIB (Cluster Information Base) format. The CIB is a distributed XML database that stores the cluster configuration, status, and history information. The output of the command shows the resources, constraints, fencing devices, stonith agents, and other configuration elements defined in the CIB.
+
+The crm configure show command can be used to verify the current cluster configuration, troubleshoot issues, and compare the actual configuration to the expected configuration. The output of the command can also be used as input to the crm configure load command to restore the previous configuration or to transfer the configuration to another cluster node.
+
+# crm configure show
+# crm configure show <resource_name>
+
+3. The crm promote command is used to promote a resource to the "master" state. when you have a cluster with two nodes, and you want to promote a resource to the active state on one node while it is passive on the other
+
+# crm resource promote <resource_name> --node node1
+
+You can also promote a resource to the active state on the current node by omitting the --node option:
+
+# crm resource promote <resource_name>
+
+3. To list the resources
+
+# crm resource list
+
+4. To check the status of resources
+
+# crm resource status
+
+5. To put the node in standby mode
+
+# crm node standby
+# crm node standby NODE_NAME
+
+6. To Put the Node online
+
+# crm node online
+# crm node online NODE_NAME
+
+if we keep both the nodes on standby mode, the cluster resources will get stopped
+
+7. To stop the cluster
+
+# crm cluster stop
+
+8. To start the cluster
+
+# crm cluster start
+
+9. To keep the cluster in maintenance-mode
+
+# crm configure property mainenance-mode=true
+
+10. To remove the cluster in maintenance-mode
+
+# crm configure property maintenance-mode=false
+
+11. To edit crm configuration
+
+# crm configure edit
+
+
+# crm_mon -1s
+# crm_mon -1fr
+# crm_mon -1f
+# crm_mon -X
+# crm_mon -n
+
+crm_mon -1: This command provides a one-time snapshot of the current cluster status.
+
+crm_mon -r: This command starts crm_mon in real-time mode and continuously updates the screen with the latest cluster status.
+
+crm_mon -n: This command displays only the nodes in the cluster and their status.
+
+crm_mon -r -t: This command starts crm_mon in real-time mode and includes a timestamp for each update.
+
+crm_mon -X: This command starts crm_mon in XML output mode, which provides a more structured view of the cluster status.
+
+crm_mon -H: This command shows the hostnames of the nodes in the cluster.
+
+crm_mon -1 -f: This command provides a one-time snapshot of the current cluster status in a friendly format.

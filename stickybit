@@ -1,0 +1,10 @@
+1. Sticky bit is a permission bit that can be set on a directory in Linux/Unix systems. When the sticky bit is set on a directory, it allows only the owner of the file to delete or rename the files within that directory, even if the other users have write permission on that directory.
+2. This feature is commonly used on shared directories to prevent accidental deletion of files by other users.
+The sticky bit is represented by the letter "t" in the output of the ls command, following the other file permission flags (e.g., drwxr-xr-t for a directory with the sticky bit set).
+3. Yes, it is possible to set the sticky bit on a file in Linux. However, the sticky bit has no effect on regular files. It only affects directories.
+4. The sticky bit on a directory ensures that only the owner of a file can delete or rename the file, even if other users have write permissions on the directory.
+
+How to set sticky bit in linux?
+-------------------------------
+chmod +t mydirectory
+chmod 1755 [file/directory]

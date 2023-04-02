@@ -1,0 +1,9 @@
+ifconfig
+
+#To down an interface
+ifconfig enp0s3 down
+
+#To up an interface
+ifconfig enp0s3 up
+
+

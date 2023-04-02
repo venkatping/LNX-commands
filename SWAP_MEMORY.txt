@@ -1,0 +1,17 @@
+======================================================Swap==================================================
+vmstat -- we can swapin and swapout
+cat /proc/swaps
+sar -S 1 2
+top and then click f(field) and choose SWAP and click d and click q
+sar -W 1 2 (swapin and swapout)
+free -h
+swapon -s
+======================================================Swap==================================================
+
+1. Add new disk
+2. Trun off swap memory #swapoff -av
+3. pvcreate /dev/sdd
+4. vgextend rhel /dev/sdd
+5. lvextend -L +10G /dev/mapper/rhel-swap
+5. mkswap /dev/mapper/rhel-swap
+6. swapon -av

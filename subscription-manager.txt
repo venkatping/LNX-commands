@@ -1,0 +1,33 @@
+subscription-manager status
+subscription-manager attach --auto
+subscription-manager register
+subscription-manager unregister
+subscription-manager repos
+subscription-manager repos --list
+subscription-manager refresh
+subscription-manager register --org="ORG_Name" --activationkey="keyname" --force
+subscription-manager list --available
+subscription-manager list --consumed
+subscription-manager remove --all
+subscription-manager repos --disable=rhel-6-server-rpms
+subscription-manager repos --enable=rhel-6-server-eus-rpms
+subscription-manager release --set=6.4 & subscription-manager repos
+subscription-manager release --show #To determine which releases system is set to
+subscription-manager release --unset  & yum clean all & subscription-manager repos
+
+
+subscription-manager register: This command registers the system with the Red Hat subscription management service. You will need to provide your Red Hat login credentials in order to complete the registration.
+
+subscription-manager attach: This command attaches a subscription to the registered system. You will need to provide the subscription pool ID in order to attach the subscription.
+
+subscription-manager list --available: This command lists all available subscriptions that can be attached to the registered system.
+
+subscription-manager list --consumed: This command lists all subscriptions that are currently attached to the registered system.
+
+subscription-manager unsubscribe --all: This command removes all attached subscriptions from the registered system.
+
+subscription-manager release --set=<release>: This command sets the Red Hat release version for the system. You will need to provide the release version (e.g., 7.9) as an argument to the command.
+
+subscription-manager repos --disable=<repo>: This command disables the specified repository for the system. You will need to provide the repository ID (e.g., rhel-7-server-optional-rpms) as an argument to the command.
+
+subscription-manager remove --pool=<pool_id>: In this command, <pool_id> is the ID of the subscription pool that you want to remove from the system. You can find the pool ID by running the subscription-manager list --consumed command, which will list all currently attached subscriptions along with their pool IDs.

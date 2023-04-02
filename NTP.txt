@@ -1,0 +1,35 @@
+ntpq -pn
+ntpdate -u 192.168.1.73
+ntpdate -d 192.168.1.73
+ntpstat
+server 192.168.1.73 iburst
+maxdistance 16.0
+cat /var/log/messages | grep -i ntpd
+
+ntpq -p: This command displays a list of the NTP servers that your system is currently synchronizing with, along with information about the current offset, jitter, and other parameters.
+
+ntpq -c peers: This command displays a list of the NTP servers that your system is currently synchronizing with, along with additional information about the servers and their status.
+
+ntpq -c rv: This command displays a list of the NTP servers that your system is currently synchronizing with, along with detailed information about the system's clock offset and error.
+
+ntpq -c assoc: This command displays a list of the NTP associations that the system has established with other servers, along with information about the association status and parameters.
+
+ntpq -c loopinfo: This command displays information about the system's local clock and its behavior, including information about the clock's stability and error.
+
+ntpq -c reslist: This command displays a list of the NTP servers that your system has used for synchronization in the past, along with the date and time of the last synchronization.
+
+systemcrl status ntpd
+systemctl start ntpd
+systemctl stop ntpd
+systemctl restart ntpd
+systemctl reload ntpd
+
+ntpdate pool.ntp.org: This command synchronizes the system clock with a NTP server provided by the pool.ntp.org domain. You can replace pool.ntp.org with the hostname or IP address of any NTP server that you want to synchronize with.
+
+ntpdate -u pool.ntp.org: This command performs the same operation as the previous command, but uses the UDP protocol to communicate with the NTP server instead of the default TCP protocol.
+
+ntpdate -d pool.ntp.org: This command synchronizes the system clock with a NTP server and displays detailed debugging output, which can be useful for troubleshooting clock synchronization issues.
+
+ntpdate -q pool.ntp.org: This command queries the specified NTP server for the current time without actually setting the system clock.
+
+ntpdate -B pool.ntp.org: This command sets the system clock using a more aggressive synchronization algorithm, which can be useful when the system clock is significantly out of sync with the NTP server.

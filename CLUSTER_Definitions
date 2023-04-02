@@ -1,0 +1,13 @@
+what is CIB?
+
+The CIB is a distributed XML database that stores the cluster configuration, status, and history information.
+The output of the command shows the resources, constraints, fencing devices, stonith agents, and other configuration elements defined in the CIB.
+
+what is constraint?
+
+In a cluster, a constraint is a set of rules that govern the placement of resources on nodes.
+Constraints are used to ensure that resources are placed on the appropriate nodes in the cluster based on specific criteria, such as resource requirements, node capabilities, or node location.
+There are several types of constraints in a cluster, including location, order, colocation, and ticket constraints, among others.
+Constraints help to ensure that resources are available when they are needed and that they are placed on the most appropriate nodes in the cluster.
+
+In simple terms, contraint means: we can specify a cluster resource to be started in which node

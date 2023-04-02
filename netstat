@@ -1,0 +1,60 @@
+Netstat command displays various network related information such as network connections, routing tables, interface statistics, masquerade connections, multicast memberships etc
+
+#To show both listening and non-listening sockets
+-a means all
+
+#To list all tcp ports
+netstat -at
+
+#To list all udp ports
+netstat -au
+
+#To list only the listening ports
+netstat -l
+
+#To list only the listening tcp ports
+netstat -tl
+
+#To list only the listening udp ports
+netstat -ul
+
+#To list only the listening UNIX ports
+netstat -lx
+
+#To list the statistics for all ports
+netstat -s
+
+#To list the statistics for TCP ports
+netstat -st
+
+#To list the statistics for UDP ports
+netstat -su
+
+#To display the PID and program names
+netstat -pt
+
+#To print the netstat information continuously
+netstat -c
+netstat -ac 5 | grep tcp
+
+#To get the non-supportive address families in the system
+netstat --verbose
+
+#To get the kernel routing information
+netstat -r
+
+#The port on which a program is running
+netstat -ap | grep ssh
+
+#Which process is using a particular port
+netstat -an | grep :22
+
+#List of network interfaces
+netstat -i
+netstat -ie #shows extended information
+
+#Displaying IPv4 and IPv6 Information
+netstat -g
+
+#Displaying RAW Network Statistics
+netstat --statistics --raw

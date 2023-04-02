@@ -1,0 +1,2 @@
+echo "offline" > /sys/block/sdbr/device/state
+echo 1 > /sys/block/sdbr/device/delete

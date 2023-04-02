@@ -1,0 +1,21 @@
+1. Replace letter, Here the letter t will be replaces with letter b
+# echo "you are the best" | tr "t" "b"
+OUTPUT: you are bhe besb
+
+2. convert Lower Case to Upper Case
+# echo "you are the Best" | tr [a-z] [A-Z]
+# echo "you are the Best" | tr [:lower:] [:upper:]
+OUTPUT: YOU ARE THE BEST
+
+3. Remove specific characters
+-d” flag to delete the character
+# echo "you are the Best" | tr -d "e"
+OUTPUT: you ar th Bst
+
+4. Delete Digits
+# echo "Alex got 98% marks" | tr -d [:digit:]
+OUTPUT: Alex got % marks
+
+5. Eliminating Newline Characters
+“-s” option which is used to convert the newline characters into spaces
+# cat file.txt | tr –s '\n’\' ' '

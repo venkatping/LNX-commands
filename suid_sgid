@@ -1,0 +1,15 @@
+1. SUID (Set User ID) and SGID (Set Group ID) are file permissions in Linux that allow a user to execute a file with the privileges of the file owner or group respectively, rather than with their own permissions.
+
+2. When a file is given the SUID permission, it runs with the permissions of the owner of the file rather than the user who executed the file.
+
+3. Similarly, when a file is given the SGID permission, it runs with the permissions of the group that owns the file rather than the user who executed the file.
+
+The numeric representation of the suid bit is 4
+The SGID bit is represented by the number 2
+
+how to set suid?
+-----------------
+chmod u+s test_script.sh
+chmod g+s filename
+$ ls -l test_script.sh
+-rwsr-xr-x 1 user user 0 Jan 25 15:00 test_script.sh

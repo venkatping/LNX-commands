@@ -1,0 +1,39 @@
+#List Updates
+zypper lu
+
+#List Installed Packages
+zypper search -i gnome
+zypper pa -i      # pa stands for packages and -i stands for installed
+
+#List Repos
+zypper lr
+
+#Clean Repositories
+zypper clean
+
+#just a command
+needs_restarting -r
+
+#search packager "cluster"
+zypper se cluster
+
+#mr means modifyrepo and -e for enable and 1 is the number of the repository to enable
+zypper mr -e 1
+
+#-d means disable
+zypper mr -d 1
+
+#List patterns in suse
+zypper patterns
+
+#Install "server with gui"
+zypper in -t pattern x11
+
+#To get info about a pattern
+zypper info -t pattern ha_sles
+
+# To see only enabled repos
+zypper lr -E
+
+# To dry run
+zypper update --dry-run
