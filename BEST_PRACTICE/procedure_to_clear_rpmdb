@@ -1,0 +1,4 @@
+ll /var/lib/rpm
+tar czvf rpmdb.tgz /var/lib/rpm/
+rm -f /var/lib/rpm/__db*;rpm --rebuilddb
+yum list kernel

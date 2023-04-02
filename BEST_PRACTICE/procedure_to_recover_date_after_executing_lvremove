@@ -1,0 +1,20 @@
+#list the contents of a specific VG
+vgcfgrestore --list <vg_name>
+
+it shows list of everything that is related to vg_name and lv_name
+
+findout this line "Created *before* executing 'lvremove /dev/mapper/sample_vg-sample_lv'" and restore that to have your data back
+
+vgcfgrestore -f /etc/lvm/archive/sample_vg_00002-784943482.vg sample_vg
+
+#Now run below command and it will show the deleted LV got recovered
+lvs
+
+#Run below command to scan the LV's and there you will find it is not active
+lvscan
+
+#make the lv active with below command
+lvchange -ay /dev/sample_vg/sample_lv
+
+#now mount the filesystem
+mount /dev/sample_vg/sample_lv /test

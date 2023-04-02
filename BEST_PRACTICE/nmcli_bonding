@@ -1,0 +1,73 @@
+NIC bonding/teaming on centos-7 using nmcli
+-------------------------------------------
+
+bonding --> bind multiple network interfaces together into a single channel
+
+what is NIC bonding/why is the need of NIC bonding
+-------------------------------------------------
+1. it increases throughput
+2. loadbalance
+3. backup (active-backup)
+
+check if bonding module is loaded
+---------------------------------
+modprobe --first-time bonding
+modinfo bonding
+
+create network bond
+-------------------
+
+#make sure you have two interfaces to configure bonding Ex: enp0s9 and enp0s10
+
+#make sure the NetworkManager is up and running
+systemctl status NetworkManager
+ 
+#check the interfaces
+nmcli connection show
+
+#create bond0 interface
+nmcli connection add con-name bond0 ifname bond0 type bond mode active-backup ipv4.addresses 192.168.0.104/24 ipv4.gateway 192.168.0.1 ipv4.dns 8.8.8.8
+
+#check the interfaces,the bond0 should be visible now in output
+nmcli connection show
+ip a sh bond0
+ip a sh dev bond0
+ip a show dev bond0
+
+#The interface configuration file creating automatically
+cat ifcfg-bond0
+
+#we are modifying the bond0 interface as Bootproto static
+nmcli connection modify bond0 ipv4.method static autoconnect yes
+
+#Reload the interface
+nmcli connection reload bond0
+cat ifcfg-bond0
+ 
+#Now create slave interfaces
+nmcli connection add type bond-slave ifname enp0s9 master bond0
+nmcli connection add type bond-slave ifname enp0s10 master bond0
+nmcli connection show
+ip a show bond0
+
+#UP the slave interfaces
+nmcli connection up bond-slave-enp0s9
+nmcli connection up bond-slave-enp0s10
+nmcli connection show
+
+#UP the bond0 interface
+nmcli connection up bond0
+ip a show bond0 #the ip should be visible now
+ping 192.168.0.104
+
+Testing
+-------
+cat /proc/net/bonding/bond0
+ifdown enp0s10
+ip should ping
+ifup enp0s10
+
+ifdown enp0s9
+ip should ping
+ifup enp0s9
+

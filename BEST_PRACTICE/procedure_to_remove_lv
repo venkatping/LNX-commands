@@ -1,0 +1,30 @@
+#unmount the filesystem
+umount /test
+
+#remove the lv
+lvremove test_vg/test_lv
+lvremove /dev/mapper/test_vg-test_lv
+
+#review the lv output
+lvs
+
+
+########################################Troubleshooting###################################
+
+#Try to deactivate lv using below command
+lvchange -an /dev/mapper/test_vg-test_lv
+
+#if you get filesystem in use error
+
+1. Try to identify if this particular LVM is mounted in your server
+mount -a | grep /dev/mapper/test_vg-test_lv
+#If mounted, unmount it
+umount /dev/mapper/test_vg-test_lv
+
+2. Check for open file desriptors or active processes running on this LV.
+lsof /dev/mapper/test_vg-test_lv
+
+3. Remove LV
+lvchange -an -v /dev/mapper/test_vg-test_lv
+lvremove -vf /dev/mapper/test_vg-test_lv
+ 

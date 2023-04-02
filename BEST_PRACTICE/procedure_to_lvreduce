@@ -1,0 +1,23 @@
+#Take the backup of the files
+tar -cjvf backup.tar.bz2 /test/*
+
+#umount the filesystem
+umount /test
+
+#check FS errors
+-n Make no changes to the filesystem
+-f Force checking even if filesystem is marked clean
+-y Assume "yes" to all questions
+e2fsck -fn /dev/mapper/test_vg-test_lv
+
+#first resize, HERE IAM RESIZING FROM 2G to 1G
+resize2fs /dev/test_vg/test_lv 1G
+
+#use lvreduce command and mention -value whichever you want to reduce
+lvreduce -L -1G /dev/mapper/test_vg-test_lv
+
+#resize the mountpoint
+resize2fs /dev/test_vg/test_lv
+
+#Mount the filesystem
+mount /dev/mapper/test_vg-test_lv /test

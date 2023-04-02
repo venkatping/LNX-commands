@@ -1,0 +1,10 @@
+Go To /etc/zypp/repos.d/
+
+vim local.repo
+
+[name]
+name=local
+baseurl=file:///mnt/
+autorefresh=0
+enabled=1
+gpgcheck=0
