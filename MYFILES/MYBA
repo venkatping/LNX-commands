@@ -1,0 +1,344 @@
+case "$1" in
+'BRESTART')
+LOG=BRESTART
+         ;;
+'ARESTART')
+LOG=ARESTART
+         ;;
+*)
+        echo "Usage: $0 { BRESTART | ARESTART }"
+        exit 1
+        ;;
+esac
+
+RE='\e[0;31m'
+BL='\e[0;34m'
+GR='\e[0;32m'
+GA='\e[0;36m'
+BR='\e[0;33m'
+NC='\e[0m'
+VER="7.1.0-2"
+NMON="14g"
+SAM="3.4.3-1.40.3"
+VVER="9.0.5.21789"
+RP="/bin/rpm"
+IS="INSTALLED SUCCESSFULLY"
+VEER="3.0.82-0.7.9"
+VERR="1.2.10-737.23.43"
+CP="/bin/cp"
+TM="/tmp/temp"
+SED="/bin/sed"
+AL="/etc/aliases"
+MV="/bin/mv"
+EC="$(ls -l /usr/bin/crontab | cut -c 8-10)"
+CE="r-x"
+LS="/bin/ls"
+CR="/usr/bin/crontab"
+DIR="/opt/app/EAS/was/"
+CAT="/bin/cat"
+CHKC="/sbin/chkconfig"
+WINB="winbind"
+NFS="nfs"
+NFSS="nfsserver"
+
+
+mkdir -p /var/log/os_details
+OUTPUTFILE="/var/log/os_details/check-${LOG}-$HOSTNAME-$(date +%Y-%m-%d).txt"
+IP=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+#ROOT CHECK
+clear
+ID=`id | sed 's/uid=\([0-9]*\)(.*/\1/'`
+if [ "$ID" != "0" ] ; then
+        echo "You must be root to execute the script $0."
+        exit 1
+fi
+
+#HOST INFORMATION
+linuxhost() {
+echo ""
+echo "HOST INFORMATION"
+echo "----------------"
+echo ""
+uname -a
+echo ""
+cat /etc/*-release
+echo ""
+echo ""
+echo "UPTIME & USER INFO"
+echo "------------------"
+echo ""
+/usr/bin/uptime
+who
+echo ""
+echo "NTP STATUS"
+echo "----------"
+ntpq -pn
+}
+
+#Disk Information
+linuxdisk() {
+echo ""
+echo "Filesystem Information"
+echo "----------------------"
+echo ""
+fdisk -l 2>/dev/null
+echo ""
+echo "FILE SYSTEMS: df -hP"
+echo "---------------------"
+echo ""
+df -hP | column -t 
+echo ""
+echo "FILE SYSTEM COUNT"
+echo "-----------------"
+df -hP | sort | wc -l
+echo ""
+echo "FILESYSTEM SORT: df -hP | sort"
+echo "------------------------------"
+df -hP | sort | column -t
+echo ""
+echo "FSTAB DETAILS:"
+echo "--------------"
+echo ""
+cat /etc/fstab | column -t
+echo ""
+echo "MTAB OUTPUT"
+echo "-----------"
+cat /etc/mtab | column -t
+echo ""
+echo ""
+echo "MOUNT DETAILS:"
+echo "--------------"
+echo ""
+mount
+echo ""
+echo "LSBLK DETAILS:"
+echo "--------------"
+echo ""
+lsblk
+echo ""
+echo "DISK UUID:"
+echo "--------------"
+echo ""
+blkid
+echo ""
+echo "Process details:"
+echo "--------------"
+echo ""
+ps -ef 
+echo ""
+echo "IOSTAT DETAILS:"
+echo "---------------"
+echo ""
+iostat
+echo ""
+echo "PV LIST DETAILS:"
+echo "------------------"
+echo ""
+pvs
+echo ""
+echo "Volume Group LIST"
+echo "----------------------"
+echo ""
+vgs
+echo ""
+echo "Logical Volume List"
+echo "-------------"
+echo ""
+lvs
+echo ""
+}
+
+#HArdware Information
+linuxhardware() {
+echo ""
+echo "Hardware Information"
+echo "---------------------"
+echo ""
+echo "NUMBER OF CPU's:"
+echo "----------------"
+echo ""
+cat /proc/cpuinfo | egrep "processor|model name"
+echo ""
+echo "MEMORY INFORMATION:"
+echo "-------------------"
+echo ""
+cat /proc/meminfo
+echo ""
+echo ""
+free -m
+echo ""
+}
+
+#NETWORK INFORMATION
+linuxnetwork() {
+echo ""
+echo "NETWORK INFORMATIONS"
+echo "--------------------"
+echo ""
+echo "IFCONFIG INFO"
+echo "-------------"
+echo ""
+ifconfig -a
+echo ""
+echo "NIC FDX/HDX - SPEED"
+echo "-------------------"
+echo ""
+ETH=`/sbin/ifconfig -a | grep Link | grep HWaddr |awk  '{print $1}'`
+for EN in $ETH
+do
+ethtool $EN
+done
+echo ""
+echo "ROUTES DETAILS:"
+echo "--------------"
+echo ""
+netstat -rn
+echo ""
+echo "NETSTAT -IN"
+echo "------------"
+echo ""
+netstat -in
+echo ""
+echo "cat /etc/hosts "
+echo "----------------"
+cat /etc/hosts |sed -e '/^#/d'
+echo ""
+echo "cat /etc/resolv.conf"
+echo "--------------------"
+cat /etc/resolv.conf | sed -e '/^#/d'
+echo ""
+}
+
+#Service List
+linuxservice()
+{
+echo ""
+echo "Chkconfig list"
+echo "---------------"
+echo ""
+/sbin/chkconfig --list
+echo ""
+echo "SHOWMOUNT FOR LOCALHOST"
+echo "-----------------------"
+echo ""
+showmount -e localhost
+echo ""
+echo "MOUNTED IN CLIENT SIDE"
+echo "----------------------"
+netstat -apn | grep  $IP:2049
+echo ""
+cp -rvf /etc/exports{,-${LOG}-`date +%F`.bak}
+}
+
+linuxapache(){
+echo "CRONTAB LIST"
+echo "------------"
+crontab -l
+echo ""
+echo ""
+echo "SYSCTL"
+echo "-------"
+sysctl -a
+echo ""
+echo ""
+echo "SYSCTL TCP"
+echo "----------"
+sysctl -a | grep -i TCP
+echo ""
+echo ""
+echo "ULIMIT SETINGS"
+echo "---------------"
+ulimit -a
+echo ""
+echo ""
+echo "LOGIN DEFS"
+echo "-----------"
+cat /etc/login.defs
+echo ""
+echo ""
+echo "NSSWITCH OUTPUT"
+echo "---------------"
+cat /etc/nsswitch.conf
+echo ""
+echo ""
+echo "SECQURITY LIMITS CONF"
+echo "---------------------"
+cat /etc/security/limits.conf
+echo ""
+echo ""
+
+}
+
+linuxrpm() {
+rpm -qa | sort -u > "/var/log/os_details/$HOSTNAME-${LOG}-rpm.out"
+echo ""
+}
+
+linuxerror() {
+echo "Error Logs"
+echo "-----------"
+echo ""
+grep -i FATAL /var/log/messages | cut -d' ' -f6- | sed -e "s/[0-9]/0/g" | sort | uniq
+grep -i ERROR /var/log/messages | cut -d' ' -f6- | sed -e "s/[0-9]/0/g" | sort | uniq
+echo ""
+echo "Dmesg Logs"
+echo "----------"
+echo ""
+dmesg | grep -i fail | sed -e "s/[0-9]/0/g" | sort | uniq
+dmesg | grep -i error | sed -e "s/[0-9]/0/g" | sort | uniq
+}
+
+linuxback() {
+
+echo "BACKUP FILES"
+echo "------------"
+cp -rvf /etc/fstab /etc/fstab-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/resolv.conf /etc/resolv.conf-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/login.defs /etc/login.defs-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/security/pam_winbind.conf /etc/security/pam_winbind.conf-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/postfix/main.cf /etc/postfix/main.cf-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/sysconfig/network/ /etc/sysconfig/network-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/pam.d/ /etc/pam.d-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /boot /etc/boot-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/profile /etc/profile-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/hosts /etc/hosts-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/krb5.conf /etc/krb5.conf-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/samba/ /etc/samba-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/ssh/sshd_config /etc/ssh/sshd_config-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/issue /etc/issue-${LOG}-$(date +%Y-%m-%d)
+cp -rvf /etc/issue.net /etc/issue.net-${LOG}-$(date +%Y-%m-%d)
+cp -rp /etc/udev/ /var/log/os_details/udev-${LOG}-$(date +%Y-%m-%d)
+cp -rp /etc/fcoe /var/log/os_details/fcoe-${LOG}-$(date +%Y-%m-%d)
+cp -rp /etc/sysconfig /var/log/os_details/sysconfig-${LOG}-$(date +%Y-%m-%d)
+cp -rp /etc/pam.d /var/log/os_details/pam.d-${LOG}-$(date +%Y-%m-%d)
+cp /etc/sysctl.conf /var/log/os_details/sysctl.conf-${LOG}-$(date +%Y-%m-%d)
+cp /etc/security/limits.conf /var/log/os_details/limits.conf-${LOG}-$(date +%Y-%m-%d)
+cp -rp /etc/ssh /var/log/os_details/ssh-${LOG}-$(date +%Y-%m-%d)
+cp -rp /boot /var/log/os_details/boot_legacy-${LOG}-$(date +%Y-%
+m-%d)
+cp -rp /etc/boot /var/log/os_details/boot_uefi-${LOG}-$(date +%Y-%m-%d)
+}
+
+
+###PLATFORM INFORMATION###
+case `uname` in
+Linux)
+echo ""
+echo "File generated on `date`" > $OUTPUTFILE
+echo ""
+linuxhost >> $OUTPUTFILE
+linuxdisk >> $OUTPUTFILE
+linuxhardware >> $OUTPUTFILE
+linuxnetwork >> $OUTPUTFILE
+linuxservice >> $OUTPUTFILE
+linuxrpm >> $OUTPUTFILE
+linuxerror >> $OUTPUTFILE
+linuxback >> $OUTPUTFILE
+echo ""
+echo "File generated at $OUTPUTFILE on `date`"
+exit
+;;
+
+*)
+exit 1
+esac

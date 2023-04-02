@@ -1,0 +1,27 @@
+1. Grub and Grub2 are Bootloaders
+
+2. Bootloaders are installed in MBR(Mater Boot Record)
+
+3. Master Boot Record is present in first sector of the computer Hard drive
+
+4. This Tells the computer to how to load the operation system
+
+5. MBR is a 512 Byte sector that is the first sectore of a primary disk
+
+6. First 446 bytes will have Bootstrap Code Area and the next 64 bytes will have partition table and remaining 2 bytes will have boot signature
+
+MBR is less than 512 bytes in size. This has three components 1) primary boot loader info in 1st 446 bytes 2) partition table info
+in next 64 bytes 3) mbr validation check in last 2 bytes.
+
+7. Grub and Grub2 are capable of handling the boot process for multiple OSes, both can auto-load OSes
+
+8. Grub references storage devices by their hardware address like sda1 and sda2
+For example, if a drive is cloned due to hardware failure or other issues, and the new drive is installed in the system,
+that hardware designation can change. Likewise, if storage devices are simply moved to different ports during maintenance,
+that can change the hardware designation as well.
+
+If the hardware designation changes for a storage device, the Grub configuration files need to be edited. Otherwise, Grub will not be able
+to locate the resources needed to boot an OS.
+
+9. Grub2 references devices by their UUID. This can improve the stability of the bootloader. It also makes the boot loader more fault-tolerant
+since it can still reference the resources needed even if the hardware designation changes

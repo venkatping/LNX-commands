@@ -1,0 +1,30 @@
+cd /tmp/
+ll
+unzip Symantec-old.zip
+ll
+cd Symantec-old
+rpm -qa | grep java
+rpm -ivh jre-8u45-linux-x64.rpm
+cd JCE/
+cd UnlimitedJCEPolicyJDK8/
+ll
+cp local_policy.jar US_export_policy.jar /usr/java/jre1.8.0_45/lib/security/
+cd ..
+ll
+cd My\ Company_LINUXRPM/
+ll
+cd Symantec\ Endpoint\ Protection\ version\ 12.1.5337.5000\ -\ English/
+ll
+cd SepFiles/
+ll
+./install.sh -i
+
+Take the manual backup of ovm manager database
+# /u01/app/oracle/ovm-manager-3/ovm_tools/bin/BackupDatabase -w
+Goto /u01/app/oracle/mysql/dbbackup path and confirm db backup .xml file gets generated
+Mount ovmm 3.4.7 iso in the server
+# mount -o loop /tmp/ovmm-3.4.7-installer-OracleLinux-b244.iso /mnt/
+Execute installer.sh script present under /mnt directory and select option 2 for upgrade and give the requested password's and select continue option
+Access the OVM Manager console URL in web browser and check the version 
+Click Help menu at right top corner and select About -> It will show the current OVM Manger version
+

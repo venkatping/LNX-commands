@@ -1,0 +1,20 @@
+cd /tmp/
+ll
+unzip Symantec-old.zip
+ll
+cd Symantec-old
+rpm -qa | grep java
+rpm -ivh jre-8u45-linux-x64.rpm
+cd JCE/
+cd UnlimitedJCEPolicyJDK8/
+ll
+cp local_policy.jar US_export_policy.jar /usr/java/jre1.8.0_45/lib/security/
+cd ..
+ll
+cd My\ Company_LINUXRPM/
+ll
+cd Symantec\ Endpoint\ Protection\ version\ 12.1.5337.5000\ -\ English/
+ll
+cd SepFiles/
+ll
+./install.sh -i

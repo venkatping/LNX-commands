@@ -1,0 +1,16 @@
+VMWare_Tools_Installation_POA
+
+tar -xvzf /tmp/VMwareTools-10.3.22-15902021.tar.gz
+cd /tmp/vmware-tools-distrib
+./vmware-install.pl
+vmtoolsd -vv
+./vmware-install.pl
+vmtoolsd -vv
+/etc/init.d/vmware-tools status
+vmtoolsd -vv
+/bin/vmtoolsd -vv
+vmtoolsd -vv
+vmtoolsd -v
+/etc/init.d/vmware-tools status
+vmtoolsd -vv
+init 6 # Post Vmware tools installation.

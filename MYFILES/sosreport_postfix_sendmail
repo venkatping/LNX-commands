@@ -1,0 +1,33 @@
+yum install sos
+
+sosreport
+
+systemctl status postfix
+systemctl status sendmail
+
+alternatives --config mta
+
+alternatives --display mta
+
+alaternatives --set mta /usr/bin/sendmail.sendmail
+
+alaternatives --set mta /usr/bin/sendmail.postfix
+
+cat /etc/postfix/main.cf  > configuration file for postfix
+
+postconf -n  > to check configured parameters
+
+redhat-support-tool addattachment -c 03037307 /path/to/sosreport/file
+
+ip addr >> /tmp/logs.txt
+route -n >> /tmp/logs.txt
+ip neigh >> /tmp/logs.txt
+cat /proc/net/arp >> /tmp/logs.txt
+for i in $(ls /etc/sysconfig/network-scripts/{ifcfg,route,rule}-*) ; do echo -e "$i\n-------------------------------------------" ; cat $i ; echo "" ; done >> /tmp/logs.txt
+lspci -nn | grep Ethernet  >> /tmp/logs.txt
+ethtool <interface_name>
+ethtool -i  <interface_name>
+systemctl status network -l >> /tmp/logs.txt
+egrep -i "eth|bond|link|error|warn|firmware" /var/log/messages* >> /tmp/logs.txt
+journalctl -u network.service >> /tmp/logs.txt
+journalctl -u NetworkManager >> /tmp/logs.txt

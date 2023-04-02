@@ -1,0 +1,65 @@
+yum-complete-transaction
+yum-complete-transaction --cleanup-only
+
+rpm -qa --last
+rpm -e package_name --> to delete a package
+rpm -q kernel-uek
+rpm -q kernel
+yum erase Kernel name (it will delete the kernel, but make sure you are giving old kernel)
+yum list updates | grep -i uek
+yum list updates | grep -i kernel
+yum list kernel  --> it will show present kernel and updated kernel(it will check from repo)
+
+--> getting the list of duplicated packages
+#package-cleanup --dupes.
+--> deleting manually old duplicates : 
+#rpm -e --justdb --nodeps {old-version-duplicated-package}
+
+grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-set-default 0 (latest kernel)
+cat /boot/grub2/grubenv | grep saved
+
+grubby --default-kernel
+grubby --default-index
+grubby --set-default /boot/vmlinuz-4.2.0-1.fc23.x86_64
+grubby --info /boot/vmlinuz-4.2.0-1.fc23.x86_64
+grubby --info=ALL
+
+---------------------------------------------
+$ wc -l sos_commands/yum/package-cleanup_--dupes
+1969 sos_commands/yum/package-cleanup_--dupes
+---------------------------------------------
+
+
+
+In order to get the system into a stable state, we need to remove the duplicate packages. Please follow these steps to remove the duplicates and update the system:
+
+- Make sure there are no yum or rpm processes currently running. If there are any yum/rpm processes running, kill them before proceeding with the next steps:
+
+    # ps -aux | grep -e rpm -e yum
+
+- Once you are certain there are no yum or rpm processes running, remove any stale lock files on the rpm database:
+
+    # rm /var/lib/rpm/__db*
+
+- Tar up the system's rpm database :
+
+    # tar cjf /tmp/rpm_db.tar.bz2 /var/lib/{rpm,yum}
+
+- Run a yum check to get a full list of duplicates (note this can take a very long time to run, especially with so many duplicate packages. However we must allow this
+  to complete in order to proceed. Please do not cancel the yum check.):
+
+    # yum check &> /tmp/yumcheck
+
+- Parse the yum check output to get a list of duplicate packages:
+
+    # grep "duplicate" /tmp/yumcheck | awk '{ print $NF }' | egrep -v "\:" > /tmp/duplicaterpms
+    # grep "duplicate" /tmp/yumcheck | awk '{ print $NF }' | egrep ":" | awk -F':' '{ print $NF }' >> /tmp/duplicaterpms
+
+- Use rpm to remove the duplicates from the database:
+
+    # for i in $(cat /tmp/duplicaterpms); do rpm -e --justdb --nodeps $i; done
+
+- Update the system:
+
+    # yum update

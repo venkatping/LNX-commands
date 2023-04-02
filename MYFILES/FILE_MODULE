@@ -1,0 +1,120 @@
+FILE MODULE:
+
+What does the Ansible file module do?
+
+Ansible’s file module can: Create files, directories and symlinks, Delete files, directories and symlinks, Modify permissions and properties of files and directories
+
+state: file vs state: touch
+
+state: file --> ensures a path is a file, but will throw an error if the path does not exist or if the path is not a file
+
+
+Example 1: create an empty file if it doesn't exist
+==========
+
+---
+- name: working with file module
+  hosts: dev
+  tasks:
+    - name: create an empty file if it doesn't exist
+      file:
+        path: $HOME/test_fil
+        state: touch
+      register: file_out
+    - debug: var=file_out.stdout_lines
+
+Example 2: delete multiple files using loop
+==========
+
+---
+- name: working with file module
+  hosts: dev
+  tasks:
+    - name: create an empty file if it doesn't exist
+      file:
+        path: "$HOME/{{ item }}"
+        state: absent
+      loop:
+        - test_fil
+        - test_file
+      register: file_out
+    - debug: var=file_out
+
+
+Example 3: Modify permissions and properties of files and directories
+==========
+
+---
+- name: working with file module
+  hosts: dev
+  tasks:
+    - name: modify permissions and properties of a directory (or create it if it doesn't exist)
+      file:
+        path: $HOME/test_directory/
+        state: directory
+        owner: ansible
+        group: ansible
+        access_time: now
+        mode: 0755
+      register: file_out
+    - debug: var=file_out
+
+Example 4: check if the file exists or not, if it is not present it will throw an error like the file is absent
+==========
+
+---
+- name: working with file module
+  hosts: dev
+  tasks:
+    - name: check file that does not exist with option statefile
+      file:
+        path: $HOME/test_directory/test_file
+        state: file
+      register: file_out
+    - debug: var=file_out
+
+Error:
+fatal: [123.123.123.123]: FAILED! => {"changed": false, 
+  "msg": "file (/home/ubuntu/absent_test_file) is absent, cannot continue", 
+  "path": "/home/ubuntu/absent_test_file", "state": "absent"}
+
+Example 5: There is already a test_directory present, we are using state:file option on that to see what it does(it will throw error)
+==========
+
+---
+- name: working with file module
+  hosts: dev
+  tasks:
+    - name: check directory with state file
+      file:
+        path: $HOME/test_directory
+        state: file
+      register: file_out
+    - debug: var=file_out
+
+Error:
+
+fatal: [123.123.123.123]: FAILED! => {"changed": false, "gid": 1000, "group": "ubuntu", "mode": "0775", 
+  "msg": "file (/home/ubuntu/test_directory) is directory, cannot continue", "owner": "ubuntu", 
+  "path": "/home/ubuntu/test_directory", "size": 4096, "state": "directory", "uid": 1000}
+
+Example 6: Create a directory or ensure a directory exists 
+==========
+
+You can ensure a directory exists by setting the state parameter to directory. If the directory already exists, Ansible will do nothing. Note that state: directory behaves like mkdir -p and will create any parent directories if they don’t exist. In the example below, test_directory (the parent directory) will be created in addition to inner_test_directory if it doesn’t already exist.
+
+
+---
+- name: working with file module
+  hosts: dev
+  tasks:
+    - name: ensure a directory exists
+      file:
+        path: $HOME/test_directory/inner_test_directory/inner_test_directory
+        state: directory
+      register: file_out
+    - debug: var=file_out
+
+
+Example 7:
+==========

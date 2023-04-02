@@ -1,0 +1,42 @@
+Installation Procedure: Linux OS
+Installation Steps
+Copy respective Falcon-sensor to Linux System.
+After copying the rpm file execute the below commands
+⦁	rpm –ivh <downloaded package filename>
+⦁	cd /opt
+
+⦁	Below command if system communicating via Proxy
+
+/opt/CrowdStrike/falconctl -s --aph=proxyha.adani.com --app=8080 --cid=600B85A7404F425CA92B7384A5265599-B8 - f
+
+Below command if system has direct internet access.
+
+/opt/CrowdStrike/falconctl -s  --cid=600B85A7404F425CA92B7384A5265599-B8 -f
+
+⦁	systemctl start falcon-sensor
+
+⦁	ps -ef | grep falcon-sensor
+
+⦁	systemctl status falcon-sensor
+
+
+⦁	If status is sensor is not yet started execute below command
+
+systemctl restart falcon-sensor
+
+⦁	After completion share the hostname & IP Address of Server to check if it’s reflecting on Crowd Strike console.
+
+rpm -ivh falcon-sensor-6.20.0-11711.el7.x86_64.rpm
+export HTTP_PROXY=proxyHA.adani.com:8080
+export HTTPS_PROXY=proxyHA.adani.com:8080
+env|grep -i proxy
+/opt/CrowdStrike/falconctl -s --aph=proxyha.adani.com --app=8080 --cid=600B85A7404F425CA92B7384A5265599-B8 - f
+/opt/CrowdStrike/falconctl -s --aph=proxyha.adani.com --app=8080 --cid=600B85A7404F425CA92B7384A5265599-B8 -f
+systemctl start falcon-sensor
+systemctl status falcon-sensor
+history|grep -i export
+vi /etc/profile		--> check for proxy details
+env | grep -i proxy
+systemctl status falcon-sensor
+curl -v telnet://proxyHA.adani.com:8080
+cat /etc/profile

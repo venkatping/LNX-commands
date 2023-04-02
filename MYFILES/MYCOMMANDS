@@ -1,0 +1,231 @@
+======================================================Swap==================================================
+vmstat -- we can swapin and swapout
+cat /proc/swaps
+sar -S 1 2
+top and then click f(field) and choose SWAP and click d and click q
+sar -W 1 2 (swapin and swapout)
+free -h
+swapon -s
+======================================================Swap==================================================
+
+======================================================ntp/chrony============================================
+ntpq -p
+ntpdate -u 192.168.14.26
+chronyc sources
+chronyc tracking
+chronyc sourcestats -v
+======================================================ntp/chrony============================================
+
+******************************************************ntp***************************************************
+ntpq -pn
+ntpdate -u 192.168.1.73
+ntpdate -d 192.168.1.73
+systemcrl status ntpd
+systemctl start ntpd
+systemctl stop ntpd
+systemctl restart ntpd
+systemctl reload ntpd
+ntpstat
+parameter:
+
+server 192.168.1.73 iburst
+tos maxdist 16
+
+cat /var/log/messages | grep -i ntpd
+******************************************************ntp****************************************************
+******************************************************chrony*************************************************
+chronyc tracking
+chronyc -a makestep
+chronyc -a 'burst 4/4'
+chronyc sourcestats -v
+chronyc sources
+
+systemctl status chronyd
+parameter:
+
+server 192.168.1.73 iburst
+maxdistance 16.0
+******************************************************chrony*************************************************
+
+======================================================locking/unlocking user================================
+locking a user:
+
+[root@localhost ~]# passwd -l username
+Locking password for user username.
+passwd: Success
+[root@localhost ~]# usermod -l username
+
+unlocking a user:
+
+passwd -u username
+usermod -U username
+chronyd -q 'server 0.europe.pool.ntp.org iburst'       --> Testing chrony
+
+to check failed logins of an user
+pam_tally2 --user=crmuser
+
+to unlock a user:
+pam_tally2 --user=tecmint --reset
+======================================================locking/unlocking user================================
+
+======================================================rpm===================================================
+rpm -evv package_name			--> to Delete the package
+rpm -ev --nodeps package_name		--> to delete a package without dependencies
+rpm -ivh package_name			--> to Install a package
+rpm -ivh --nodeps package_name		--> To install a package without dependencies
+rpm -q package_name			--> check an installed package
+rpm -Va					--> To verify all the packages
+rpm -ql package_name 			--> list all files of an installed package
+rpm -qa --last 				--> list recently installed packages
+rpm -qa 				--> list all installed packages
+rpm -Uvh package_name 			--> upgrade an already installed package
+rpm -qpR package_name			--> dependency check before installing package
+rpm -q kernel --last			--> To check recently installed kernel
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6	--> To import gpgkey
+rpm -qa gpg-pubkey*			--> listing all imported gpgkeys
+Rebuilding rpm database if it is corrupted
+cd /var/lib
+rm __db*
+rpm --rebuilddb
+rpmdb_verify Packages
+======================================================rpm===================================================
+
+======================================================mount=================================================
+cat /proc/mounts
+dmesg | grep cifs
+dmesg | grep nfs
+cat /proc/mounts | grep ro
+cat /var/log/messages | grep "read-only"
+showmount -e 10.1.26.44
+smbclient -L 10.1.42.35 -U username
+smbstatus
+setterm -foreground green -store
+for i in /proc/*/status ; do awk '/VmSwap|Name/{printf $2 " " $3}END{ print ""}' $i; done | sort -k 2 -n -r | head -10
+ls /sys/class/scsi_host/ | while read host ; do echo "- - -" > /sys/class/scsi_host/$host/scan ; done
+echo "- - -" > /sys/class/scsi_host/host/scan
+pvcreate /dev/sdb
+vgextend rhel /dev/sdb
+lvextend -l +100%FREE /dev/mapper/rhel-store -r
+xfs_growfs /dev/mapper/rhel-store
+
+======================================================mount=================================================
+ls /var/log/sa/sa[0-9][0-9] | while read safile ; do sar -u -f "$safile" ; done > /tmp/sareport_cpu
+ls /var/log/sa/sa[0-9][0-9] | while read safile ; do sar -q -f "$safile" ; done > /tmp/sareport_load_average
+ls /var/log/sa/sa[0-9][0-9] | while read safile ; do sar -r -f "$safile" ; done > /tmp/sareport_ram
+
+======================================================OVMM-Removing LUN=====================================
+fuser -v -m /backup_new
+
+multipath -ll LUNID
+echo "offline" > /sys/block/sdav/device/state
+echo "offline" > /sys/block/sdas/device/state
+echo "offline" > /sys/block/sdat/device/state
+echo "offline" > /sys/block/sdbo/device/state
+echo 1 > /sys/block/sdav/device/delete
+echo 1 > /sys/block/sdas/device/delete
+echo 1 > /sys/block/sdat/device/delete
+echo 1 > /sys/block/sdbo/device/delete
+multipath -f LUNID
+
+rsync -av --progress /oracle_old/ /oracle/
+
+ip addr add 10.1.255.170/23 dev eth0
+ifconfig eth0 10.1.255.170 netmask 255.255.254.0 up
+route add default gw 10.1.254.1
+
+lsscsi
+iostat -Nc
+iostat -dN
+sar -b 5 10|more
+sar -d 5 10|more
+lsblk |grep -B3 /rmanbkp
+lvs -a -o +devices
+
+hostname;top -b -n 1 | head -n 10 | tail -n 4;uptime
+du -ah . | sort -k -h | tail -n 50
+
+lvcreate -l 100%FREE -n lv_backup2 vg_backup2
+
+pkill -HUP rsyslogd
+
+apt list --installed | grep -i ntp
+apt-get clean all
+apt-get update
+apt-get upgrade
+apt-get download package-name
+
+
+pvcreate /dev/mapper/mpathx
+vgcreate vg_acmvpf /dev/mapper/mpathx
+lvcreate -l 100%FREE -n lv_acmvpf vg_acmvpf
+mkfs.xfs 
+
+
+change the hard and soft limit values
+
+root hard nofile 10240
+root soft nofile 10240
+
+ulimit -n 10240 .bashrc
+ulimit -n 10240 .bash_profile
+
+swapoff -v /dev/mapper/rhel-swap
+lvresize /dev/mapper/rhel-swap -L +1G
+
+
+
+How to create new filesystem in linux
+
+How to create new filesystem in linux?
+
+Assume that we have a disk of 500G with device name sdd(and we need to create a new filesystem with the size of 500G
+
+pvcreate /dev/sdd
+
+what is the drwbacks of ext4
+
+
+
+export TERM=xterm-256color
+export PS1=`printf "\033[32m$ \033[39m"`
+
+ColorForegroundBackground
+Black\033[30m\033[40m
+Red\033[31m\033[41m
+Green\033[32m\033[42mOrange\033[33m\033[43mBlue\033[34m\033[44mMagenta\033[35m\033[45mCyan\033[36m\033[46mLight gray\033[37m\033[47mFallback to distro's default\033[39m\033[
+
+
+
+echo -e "This is normal text - \\033\\1331;33;44\\155 This is yellowon blue text\\033\\133\\155"
+echo -e '\e[0A;3T;4Bm'
+/u01/app/oracle/ovm-manager-3/ovm_tools/bin/BackupDatabase -w
+
+Ubuntu Commands
+---------------
+apt-cache showpkg compat-libstdc++-33-3.2.3-68.1.x86_64.rpm
+apt-get update
+apt-get clean all
+apt install ntp
+ufw staus
+
+
+As soon as systempower on the system firmware that is BIOS
+The BIOS runs the power on self test and starts to initialize the sum of the hardware
+The BIOS then searches for a bootable device by searching for MBR on all the disks in the order configured in the BIOS
+The BIOS reads the bootloader from the disk and then passes the control of the system to the booloader
+In RHEL7 system the bootloader is grub2
+The Bootloader loads its configuration from the disk and presents the user with boot menu of all the possible configurations
+172.16.51.98
+After the user has made a choice or automatic timeout has happen, the bootloader loads the configured kernel and initramfs and places them into RAM memory
+kernel is basically the code of the operating system which directly interacts with hardware
+memory,file,cpu scheduling,I/O Management
+Initramfs:- initramfs is a GZIPPED or archive containing the device driver software for all the hardwares necessary at boot,It also contains root file system,init scripts,systemd,etc
+In rhel7 the initramfs contains an entire usable system by itself
+The boot loader then hands over the control of the system over to the kernel
+The kernel initializes all the hardwares on which it can find a device driver software in the initramfs
+The kernel then executes /sbin/init from initramfs as processID 1
+on RHELv7 the initramfs contains a working copy of systemd as /sbin/init
+The systemd instance from initramfs then executes all the units for the init.target, this includes the mounting the actual root filesystem on /sysroot
+The kernel root filesystem is then switched from initramfs root file system to system root file system that was previously mounted on /sysroot
+systemd looks for the defaut target(default runlevel) configured on the system and then it starts or stops units to comply with the configuration for that target
+The login screen is then respond

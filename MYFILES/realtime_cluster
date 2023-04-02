@@ -1,0 +1,82 @@
+clustat
+clustat -m -> Display status of and exit
+clustat -s -> Display status of and exit
+clustat -l -> Use long format for services
+cman_tool status -> Show local record of cluster status
+cman_tool nodes -> Show local record of cluster nodes
+cman_tool nodes -af
+ccs_tool lsnode -> List nodes
+ccs_tool lsfence -> List fence devices
+group_tool -> displays the status of fence, dlm and gfs groups
+group_tool ls -> displays the list of groups and their membership
+Resource Group Control Commands:
+clusvcadm -d -> Disable
+clusvcadm -e -> Enable
+clusvcadm -e -F -> Enable according to failover domain rules
+clusvcadm -e -m -> Enable on
+clusvcadm -r -m -> Relocate to member
+clusvcadm -R -> Restart a group in place.
+clusvcadm -s -> Stop
+Resource Group Locking (for cluster Shutdown / Debugging):
+clusvcadm -l -> Lock local resource group manager. This prevents resource groups from starting on the local node.
+clusvcadm -S -> Show lock state
+clusvcadm -Z -> Freeze group in place
+clusvcadm -U -> Unfreeze/thaw group
+clusvcadm -u -> Unlock local resource group manager. This allows resource groups to start on the local node.
+clusvcadm -c -> Convalesce (repair, fix) resource group. Attempts to start failed, non-critical resources within a resource group.
+Cluster Command Quick Reference
+clustat -> Display the status of the cluster as viewed from the executing host
+clusvcadm -> Manage services across the cluster.
+clusvcadm -r -m -> Move a service to another node
+clusvcadm -d -> Stop a service
+clusvcadm -e -> Start a service
+Cluster configuration system
+ccs_tool -> Online management of cluster configuration
+ccs_tool update /etc/cluster/cluster.conf -> Update the cluster.conf file across the cluster
+cman_tool -> Manage cluster nodes and display the current state of the cluster
+cman_tool status
+fence_node -> Eject a node from the cluster
+fence_tool dump -> Print fence debug messages
+
+
+crm configure property maintenance-mode=true
+crm configure show cib-bootstrap-options
+crm status
+
+
+
+
+
+
+
+
+
+clustat
+clusvcadm -r <service_name>		      --> if it is a two node cluster, This command is enough,no need to mention Member Name
+clusvcadm -r <service_name -m <Member_Name>   --> Relocate a service to Passive Node,if it is a three/more node cluster,it is mandatory to mention Member Name
+clusvcadm -e <Service_Name> -m <Member_Name>  --> Enable a service in passive Node
+
+To start the cluster software on a member, type the following commands in this order: 
+
+#service cman start 
+#service clvmd start, if CLVM has been used to create clustered volumes 
+#service gfs start, if you are using Red Hat GFS 
+#service rgmanager start 
+
+To stop the cluster software on a member, type the following commands in this order: 
+
+#service rgmanager stop 
+#service gfs stop, if you are using Red Hat GFS 
+#service clvmd stop, if CLVM has been used to create clustered volumes 
+#service cman stop 
+
+Stopping the cluster services on a member causes its services to fail over to an active member. 
+
+When a service is frozen, it behaves as follows: 
+ 	
+->Status checks are disabled. 
+->Start operations are disabled. 
+->Stop operations are disabled. 
+->Failover will not occur (even if you power off the service owner)
+#clusvcadm –Z web  --> Freezing a service <web>
+#clusvcadm –U web  --> UnFreezing a service <web>

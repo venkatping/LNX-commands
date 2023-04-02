@@ -1,0 +1,77 @@
+Linux cluster commands
+
+Checking status of the cluster:
+# clustat
+# clustat -m Display status of and exit
+# clustat -s Display status of and exit
+# clustat -l Use long format for services
+
+# cman_tool status Show local record of cluster status
+# cman_tool nodes Show local record of cluster nodes
+# cman_tool nodes -af
+
+# ccs_tool lsnode List nodes
+# ccs_tool lsfence List fence devices
+
+# group_tool displays the status of fence, dlm and gfs groups
+# group_tool ls displays the list of groups and their membership
+
+Resource Group Control Commands:
+clusvcadm -d Disable
+clusvcadm -e Enable
+clusvcadm -e -F Enable according to failover domain rules
+clusvcadm -e -m Enable on
+clusvcadm -r -m Relocate to member>
+clusvcadm -R Restart a group in place.
+clusvcadm -s Stop
+
+Resource Group Locking (for cluster Shutdown / Debugging):
+clusvcadm -l Lock local resource group manager.
+This prevents resource groups from
+starting on the local node.
+clusvcadm -S Show lock state
+clusvcadm -Z Freeze group in place
+clusvcadm -U Unfreeze/thaw group
+
+clusvcadm -u Unlock local resource group manager.
+This allows resource groups to start on the local node.
+
+clusvcadm -c Convalesce (repair, fix) resource group.
+Attempts to start failed, non-critical resources within a resource group.
+###################################################################################################
+Cluster Command Quick Reference
+
+1)Cluster status
+clustat --> Display the status of the cluster as viewed from the executing host
+
+2)Cluster services administration
+clusvcadm --> Manage services across the cluster.
+
+3)Move a service to another node
+clusvcadm –r -m
+
+4)Stop a service
+clusvcadm –d
+
+5)Start a service
+clusvcadm –e
+
+6)Cluster configuration system
+ccs_tool --> Online management of cluster configuration
+
+7)Update the cluster.conf file across the cluster
+ccs_tool update /etc/cluster/cluster.conf
+
+8)Cluster Management
+cman_tool --> Manage cluster nodes and display the current state of the cluster
+
+9)Display status
+cman_tool status
+
+10)Fencing tools
+
+11)Eject a node from the cluster
+fence_node
+
+12)Print fence debug messages
+fence_tool dump

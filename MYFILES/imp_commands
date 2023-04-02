@@ -1,0 +1,143 @@
+sed -i 2d  /root/.ssh/known_hosts
+multipath -ll | grep dm- | wc -l
+rmvterm -m Server-8247-22L-SN845D23A -p nwapioquahnew
+rmvterm -m Server-9119-MHE-SN21EBB97 -p nwabiwprdhle
+chronyd -q 'server 0.europe.pool.ntp.org iburst'       --> Testing chrony
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+/etc/init.d/network status
+/etc/init.d/network start
+/etc/init.d/ovs-agent status
+/etc/init.d/ovs-agent start
+-----------------------------------------------------------------
+
+To Start the OVM Manager
+/etc/init.d/ovmm_mysql start
+/etc/init.d/ovmcli start
+/etc/init.d/ovmm start
+
+To Stopthe OVM Manager
+/etc/init.d/ovmm stop
+/etc/init.d/ovmcli stop
+/etc/init.d/ovmm_mysql stop
+
+# systemctl status ovmm_mysql
+# systemctl status ovmcli
+# systemctl status ovmm
+
+cat /u01/app/oracle/ovm-manager-3/.config
+cd /u01/app/oracle/mysql/dbbackup/
+/u01/app/oracle/ovm-manager-3/ovm_tools/bin/BackupDatabase -w
+/etc/init.d/network restart
+multipath -ll
+multipath -ll | grep -v active
+multipath -ll | wc -l
+/etc/init.d/ovs-agent status
+/etc/init.d/ovs-agent restart
+
+
+step 1: Take barestart
+step 2: Take osbkp
+stpe 3: send osbkp to another server(copied to 10.6.127.122 10.6.127.53)
+step 4: take config output(cat /u01/app/oracle/ovm-manager-3/.config)
+step 5: go into the directory(cd /u01/app/oracle/mysql/dbbackup/)
+step 6: take db backup(/u01/app/oracle/ovm-manager-3/ovm_tools/bin/BackupDatabase -w)
+step 7: stop ovm Manager
+
+	/etc/init.d/ovmm stop
+	/etc/init.d/ovmcli stop
+	/etc/init.d/ovmm_mysql stop
+step 8: check status of ovm manager
+
+	systemctl status ovmm_mysql
+	systemctl status ovmcli
+	systemctl status ovmm
+step 9: take a sanitary reboot
+step 10: consfigure repo
+step 11: 
+
+sshd -T | grep kex
+sshd -Q
+
+KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1
+
+#!/bin/bash
+
+cp -p "`ls -dtr1 "$SRC_DIR"/*.war | tail -1`" "$DEST_DIR"
+
+
+package-cleanup --dupes
+package-cleanup --cleandupes
+
+rpm -qa --last kernel
+apt list installed
+
+
+
+#!/bin/bash
+LOG=/tmp/OSLOGS/`hostname`_cpu_mem_load.html
+if [ -f "$LOG" ]
+then
+echo "file exists , removing file"
+rm -rf $LOG
+fi
+LOG=/tmp/OSLOGS/`hostname`_cpu_mem_load.html
+echo "<html>" >> $LOG
+echo "<body>" >> $LOG
+echo "<h3>CPU_MEM_LOAD_LOGS_FROM_`hostname`_ON_`date +%d-%m-%y`" >> $LOG
+echo "<table border=1><tr><th><b>HOSTNAME</th><th>IP ADDRESS</th><th>CPU</th><th>Memory</th><th>SWAP</th></b></tr>" >> $LOG
+sname=$(hostname)
+sip=$(hostname -i | awk '{print $1}')
+scpu=$(top -bn3 -d2 | grep "%Cpu" | tail -1 | awk '{print 100 - $8"%"}')
+smem=$(free | awk '/Mem/{printf("%.2f%"), $3/$2*100}')
+sswap=$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
+echo "<tr><td>$sname</td><td>$sip</td><td>$scpu%</td><td>$smem%</td><td>$sswap%</td></tr>" >> $LOG
+
+echo "<table border=1><th><b><u>FILE SYSTEMS USAGE</u></b>" >> $LOG
+sbdf=$(df -PTh | grep -v tmpfs)
+echo "<PRE>$sbdf</PRE></th>" >> $LOG
+
+echo "<table border=1><th><b><u>CPU CONSUMED PROCESSES</u></b>" >> $LOG
+PSCPU=$(ps -eo pid,pmem,ppid,cmd,%mem,%cpu --sort=-%cpu | head -5)
+echo "<PRE>$PSCPU</PRE></th>"  >> $LOG
+
+echo "<table border=1><th><b><u>MEMORY CONSUMED PROCESSES</u></b>" >> $LOG
+PSMEM=$(ps -eo pid,pmem,ppid,cmd,%mem,%cpu --sort=-%mem | head -5)
+echo "<PRE>$PSMEM</PRE></th>" >> $LOG
+
+echo "<table border=1><th><b><u>LOAD AVERAGE</u></b>" >> $LOG
+PSLOAD=$(sar -q 5 5)
+echo "<PRE>$PSLOAD</PRE></th></body></html>" >> $LOG
+#echo "<h3>END_OF_LOGS_FROM_`hostname`</h3>" >> $LOG
+#echo "----------------------------------------" >> $LOG
+
+
+#!/bin/bash
+for host in 10.6.63.78
+        do
+        scp $host:/tmp/OSLOGS/*_cpu_mem_load.html /tmp/OSLOGS/
+        done
+(echo "Subject:CPU_MEM_LOAD_LOGS" ; echo "From:snxt-linux@adani.com";echo "MIME-Version: 1.0"; echo "Content-Type: text/html" ; echo "To:praveen.gangilla@wipro.com" ; find /tmp/OSLOGS/ -type f -name *cpu_mem_load.html -exec cat {} \; | column -t -s "") | /sbin/sendmail -t
+
+rm -r /tmp/OSLOGS/*_cpu_mem_load.html
+
+postsuper -d ALL
+postsuper -d DEFERRED
+
+
+
+#!/bin/bash
+if [ "$#" -eq 0 ]; then
+echo "No arguments supplied"
+echo "Usage: $0 sender@example.com somedomain.com" >&2
+exit 1
+fi
+read -p "Do you want to delete all queued messages from $1 to $2 ? " -r
+echo 
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+echo -e "Postfix Warning: Deleting all queued messages from $1 to $2"
+mailq | tail -n +2 | head -n -2 | grep -v '^ *(' | awk -v sender="$1" -v domain="$2" 'BEGIN { RS = "" } { if (($7 == sender) && ($8 ~ domain)) print $1 }' | tr -d '*!' | postsuper -d -
+echo "Operation completed ..." else echo "Operation aborted ..." 
+fi
+
+opendkim-genkey -t -s AEML1 -d example.com
