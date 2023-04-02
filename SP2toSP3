@@ -1,0 +1,35 @@
+2. Login to the server with root access and install the migration tool:
+zypper install yast2-migration
+
+3. Update the package management tools with the old SUSE Linux Enterprise repositories.
+zypper patch --updatestack-only
+
+4. Get a list of packages that currently do not have a repository assigned to them (orphaned packages):
+zypper packages --orphaned
+Carefully review the list and remove all orphaned packages that are no longer needed. Make a note of all remaining orphaned packages, you will need it later for comparison.
+
+5. Get a list of all repositories that the system is currently subscribed:
+zypper repos -u
+
+6. Update each repository URL so that its product version number is 15-SP3. For example, if the URL of a repository is
+http://rmt.example.com/repo/SUSE/Products/SLE-15-SP2-Product-SLES/x86_64/product/
+
+change it to
+http://rmt.example.com/repo/SUSE/Products/SLE-15-SP3-Product-SLES/x86_64/product/
+
+7. Review your changes by running zypper repos -u and update the repositories by running:
+sudo zypper refresh -f -s
+
+In case updating a repository fails, double-check whether you entered the wrong URL. If the problem cannot be fixed, it is recommended to disable the failing repository.
+If all repositories are correctly configured, run
+sudo zypper refresh -f -s
+
+again, to make sure all repositories are up-to-date.
+
+8. Before starting the migration it is recommended do a test run first:
+sudo zypper dup -D --no-allow-vendor-change --no-recommends
+
+9. If problems occur, fix them before proceeding. In case the test run succeeds, perform the real migration by running:
+sudo zypper dup --no-allow-vendor-change --no-recommends
+
+-no-allow-vendor-change ensures that third-party RPMs will not overwrite RPMs from the base system. The option --no-recommends ensures that packages deselected during initial installation will not be added again.
