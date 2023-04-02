@@ -19,3 +19,6 @@ OUTPUT: Alex got % marks
 5. Eliminating Newline Characters
 “-s” option which is used to convert the newline characters into spaces
 # cat file.txt | tr –s '\n’\' ' '
+
+6. tr can do multiple character replacement as well. Let’s see another example of translating braces into parenthesis:
+# echo "{baeldung}" | tr '{}' '()'
