@@ -1,0 +1,42 @@
+1. Copy a File from Local to Remote Server
+# scp sample_example.txt root@136.183.142.28:/home/remote_dir
+
+2. Copy a File from a Remote Server to the Local Host
+# scp 147.182.143.27:/home/remote_dir/sample_example.txt /home/localhost/
+
+3. Copy a File from One Remote Server to Another Remote server
+# scp root@147.182.143.27:/home/remote_dir/sample_example.txt sofija@146.153.129.25:/home/ansible
+
+4. Copy Multiple Files with SCP
+# scp sample1.txt sample2.txt root@147.182.143.27:/home/remote_dir
+
+5. Copy a Folder from Local Host to Remote Server Recursively
+# scp -r example root@147.182.143.27:/home/remote_dir
+
+6. Copy a File with SCP Using a Specific Port
+# scp -P 2222  sample_example.txt root@147.182.143.27:/home/remote_dir
+
+7. Copy a File with SCP in Quiet Mode(Running a scp command in quiet mode means disabling the progress meter and non-error messages from showing in the output)
+# scp -q sample_example.txt root@136.183.142:/home/remote_dir
+
+8. Copy a File with SCP in Verbose Mode
+# scp -v sample_example.txt root@147.182.143.27:/home/remote_dir
+
+9. Copy a File with SCP and Limit Bandwidth
+Another helpful option is limiting the bandwidth used by the scp command by adding the -l parameter. This is especially useful when copying large files to prevent SCP from draining the bandwidth.
+When limiting bandwidth, you need to specify the number in Kilobits/s. Bear in mind that 1 byte = 8 bits. Therefore, if you want to limit the bandwidth for SCP to 100 KB/s, the value for l in kbps would be 800 (100 x 8), as in the command below:
+# scp -l 800 sample_example.txt root@147.182.143.27:/home/remote_dir
+
+10. Copy a File with SCP Faster
+To speed up the file transfer from one server to another, add the -C option that compresses the file while it’s being transferred. Once the file reaches its destination, it returns to its normal size.
+# scp -C sample_example.txt root@147.182.143.27:/home/remote_dir
+
+11. Copy a File with SCP Using a Specific Cipher
+# scp -c 3des sample_example.txt root@147.182.143.27:/home/remote_dir
+
+12. Copy a File with SCP Using IPv4 or IPv6 -4 -6
+# scp -6 sample_example.txt root@147.182.143.27:/home/remote_dir
+
+13. Copy a File with SCP Preserving File Attributes
+To copy a file using SCP and preserve file attributes such as modification and access times, modes, and permissions, use the -p option
+# scp -p sample_example.txt root@147.182.143.27:/home/remote_dir
