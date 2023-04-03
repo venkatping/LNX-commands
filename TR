@@ -30,3 +30,7 @@ OUTPUT: Hi, nice to meet you!
 8. Delete Specific characters
 # echo "A a B b C c" | tr -d 'a-z'
 OUTPUT: A  B  C
+
+9. we would like to match any character that is not a lowercase letter and translate it into whitespace
+# echo "tr@is#aMvery~handy tool" | tr -c 'a-z' ' '
+OUTPUT: tr is a very handy tool
