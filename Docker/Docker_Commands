@@ -11,5 +11,33 @@
 # docker -v	==> Display single Line Output
 # docker version ==> Display Detailed output
 
-5. Remove stopped containers
+5. Stop a container
+# docker stop <CONTAINER_ID>
+# docker stop <CONTAINER_NAME>
+
+6. Remove stopped containers
 # docker rm <container_ID> or docker rm <container_name>
+
+7. Delete an Image
+# docker rmi <Image_Name ==> make sure no Running or Stopped containers are available with image, it any containers exist with this image, then we cannot delete the Image
+
+8. Want to docwnload an Image but i should not RUN IT
+# docker pull ubuntu
+
+9. when we want to RUN an ubuntu/centos container, when we execute # docker run untuntu, it will run and will immediately exists why?
+unlike virtual machines, containers are meant to host an Operating system(ubuntu/centos)
+Containers are meant to RUN a specific task or process such as webserver, App server, DB server etc, once the taask completes and it will exit
+container only lives as long as the process inside it is alive, if the webserver inside the container stopped/crashed then the container will exit
+This is why when we RUN a container with ubuntu/centos image, it will stop immediately, because ubuntu is just an image of an OS and there is no process/Application running in it
+
+# docker run ubuntu sleep 100
+
+10. How to RUN a command on a RUNNING container
+# docker exec <container_name> cat /etc/hosts
+# docker exec sleepy_germain cat /etc/hosts
+# docker exec sleepy_germain hostname
+
+11. How to attach/Dettach from a container
+# docker run kodekloud/simple-webapp ==> This will run in foreground
+# docker run -d kodekloud/simple-webapp ==> Now container will run in Backend
+# docker attach <CONTAINER_ID> ==> This will attach to container
