@@ -53,3 +53,6 @@ This is why when we RUN a container with ubuntu/centos image, it will stop immed
 
 15. Delete All (stopped,Running,created etc) containers using single command
 # docker rm $(docker ps -aq)
+
+16. Run Nginx container with name as per wish on port 8080
+# docker run -d -p 8080:80 --name webapp nginx
