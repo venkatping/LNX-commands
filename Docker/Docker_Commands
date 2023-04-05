@@ -62,3 +62,4 @@ This is why when we RUN a container with ubuntu/centos image, it will stop immed
 
 18. By using Below command we can redis of particular version, In this case we mentioned as redis:4.0 and redis:4.0 is called as tag
 docker run redis:4.0
+We can find all supported tags at dockerhub.com
