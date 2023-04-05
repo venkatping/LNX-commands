@@ -41,3 +41,15 @@ This is why when we RUN a container with ubuntu/centos image, it will stop immed
 # docker run kodekloud/simple-webapp ==> This will run in foreground
 # docker run -d kodekloud/simple-webapp ==> Now container will run in Backend
 # docker attach <CONTAINER_ID> ==> This will attach to container
+
+12. Delete stopped containers,dangling images, network
+# docker system prune
+
+13. list only container IDs( it includes container IDs of Both Running created stopped etc)
+# docker ps -aq
+
+14. Stop All Running containers with single command
+# docker stop $(docker ps -aq)
+
+15. Delete All (stopped,Running,created etc) containers using single command
+# docker rm $(docker ps -aq)
