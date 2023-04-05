@@ -54,12 +54,19 @@ This is why when we RUN a container with ubuntu/centos image, it will stop immed
 15. Delete All (stopped,Running,created etc) containers using single command
 # docker rm $(docker ps -aq)
 
-16. Run Nginx container with name as per wish on port 8080
-# docker run -d -p 8080:80 --name webapp nginx
-
-17. By using below command we can run redis, In this case if we didn't define any tag it will by default take latest version
+16. By using below command we can run redis, In this case if we didn't define any tag it will by default take latest version
 # docker run redis
 
-18. By using Below command we can redis of particular version, In this case we mentioned as redis:4.0 and redis:4.0 is called as tag
+17. By using Below command we can redis of particular version, In this case we mentioned as redis:4.0 and redis:4.0 is called as tag
 docker run redis:4.0
 We can find all supported tags at dockerhub.com
+
+18. By Default Docker container Does Not Listen to standard Input(example: Enter your name), in other words it does run in Non-Interactive Mode, To avoid This we can use -i option and -t stands for pseudo termincal, so with the combination of -i and -t we are now attched to the terminal as well as interactive Mode on the container
+# docker run -i kodekloud/simple-prompt-docker
+Welcome! Please enter your name: Naveen
+
+Hello and Welcome Naveen!
+$ 
+
+19. Run Nginx container with name as per wish on port 8080 which is called PortMapping
+# docker run -d -p 8080:80 --name webapp nginx
