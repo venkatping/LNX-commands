@@ -56,3 +56,9 @@ This is why when we RUN a container with ubuntu/centos image, it will stop immed
 
 16. Run Nginx container with name as per wish on port 8080
 # docker run -d -p 8080:80 --name webapp nginx
+
+17. By using below command we can run redis, In this case if we didn't define any tag it will by default take latest version
+# docker run redis
+
+18. By using Below command we can redis of particular version, In this case we mentioned as redis:4.0 and redis:4.0 is called as tag
+docker run redis:4.0
