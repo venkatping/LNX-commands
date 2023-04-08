@@ -1,0 +1,36 @@
+1. give the name to the screen
+# screen -S patching
+
+2. List screen
+# screen -ls
+# screen -list
+
+3. Shortcut to open a new screen within screen
+ctrl+ac
+
+4. How to Rename a Screen Window
+ctrl-a+shift-A
+
+5. Switching Between Screen Terminal Windows, List screen windows
+ctrl-a+shit-"
+
+6. shortcut to detach from screen
+ctrl-ad
+
+7. how to reattach to screen when it is already attached
+screen -rd 1284.patching
+
+8. check the version of screen
+# screen --version
+
+9. Kill screen session
+ctrl-a+k
+
+10. Move to next screen windows
+ctrl-a+n or ctrl-an
+
+11. Move between current and previous window
+ctrl-aa
+
+12. How to jump to particular screen window
+ctrl-a+2
