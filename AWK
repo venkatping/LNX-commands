@@ -1,13 +1,32 @@
-ansible@ubuntu-c:~/ansible$ awk 'BEGIN {print "HELLO WORLD" }'
-HELLO WORLD
-ansible@ubuntu-c:~/ansible$ date
-Sat Aug  6 04:37:44 UTC 2022
-ansible@ubuntu-c:~/ansible$ date | awk '1'
-Sat Aug  6 04:37:58 UTC 2022
-ansible@ubuntu-c:~/ansible$ date | awk '"HELLO WORLD"'
-Sat Aug  6 04:38:24 UTC 2022
-ansible@ubuntu-c:~/ansible$ date | awk '{print}'
-Sat Aug  6 04:38:43 UTC 2022
+The defailt delimeter of an awk is space or TAB
+
+1. Print Whole content of a file
+# awk '{print $0}' /etc/passwd
+
+2. Print column 1 of a file
+# awk -F ":" '{print $1}' /etc/passwd
+# awk -F ':' '{print $1}' /etc/passwd
+# awk -F : '{print $1}' /etc/passwd
+
+3. Add two columns(values) of a file
+# awk '{print $1 + $2}' file
+[root@minikube SCPT]# awk '{print $1 + $2}' file
+3
+[root@minikube SCPT]# cat file
+1 2
+[root@minikube SCPT]#
+
+4. Print Hello World
+# awk 'BEGIN {print "Hello World!"}'
+
+5. Print date
+# date | awk '{print}'
+# date | awk '1'
+# date | awk '{print}'
+# date | awk '{print $0}'
+# date | awk '"Hello World"'
+
+
 ansible@ubuntu-c:~/ansible$ awk -F: '{print $1}' /etc/passwd
 cat /etc/passwd | awk 'BEGIN{FS=":"} {print $1,$2}'
 cat /etc/passwd | awk -F : '{print $1}'

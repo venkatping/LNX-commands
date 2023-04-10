@@ -1,0 +1,7 @@
+nmcli connection add type bond ifname bond0
+nmcli connection add type bond-slave ifname enp0s8 master bond0
+nmcli connection add type bond-slave ifname enp0s9 master bond0
+nmcli connection show
+nmcli connection up bond-slave-enp0s8
+nmcli connection up bond-slave-enp0s9
+nmcli connection up bond0
