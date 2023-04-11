@@ -60,12 +60,20 @@ The defailt delimeter of an awk is space or TAB
 16. Find and Replace a string using AWK
 # awk '{gsub("#Port 22","Port 22");print $0 }' /etc/ssh/sshd_config
 
+17. It will print only Line Numbers without any data
+# awk '{print NR} ' /etc/passwd
+
+18. It will print every line as 1
+# awk '{print "1"} ' /etc/passwd
+
+19. It will print every line of a file as ok
+# awk '{print "ok"} ' /etc/passwd
+
+20. It will print line numbers and data
+# awk '{print NR,$0} ' /etc/passwd
+
 cat /etc/passwd | awk '{print FILENAME}' --> FILENAME will give the cureent file name which you are working
 cat /etc/passwd | awk '{print FILENAME,$1}' --> FILENAME will give the cureent file name which you are working and also print first column of each line
-awk '{print "ok"} ' /etc/passwd	--> it will print every line of a file as ok
-awk '{print "1"} ' /etc/passwd --> it will print every line as 1
-awk '{print NR} ' /etc/passwd --> it will print only line numbers without any data
-awk '{print NR,$0} ' /etc/passwd --> it will print line numbers and data
 awk 'BEGIN {print "====STARTING AWK SCRIPT===="} /root/ {print $0} END {print "====ENDING AWK SCRIPT===="}' /etc/passwd
 ~$ cat myawk.awk 
 BEGIN {
