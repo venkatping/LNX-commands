@@ -1,4 +1,41 @@
 SED command in unix stands for STREAM EDITOR. This can be used to perform lots of functions like searching/replacing/find/insertion/deletion
+-i --in-place is used to make changes permanent to the file
+
+1. This command will replace PermitRootLogin as PERMITROOTLOGIN if PermitRootLogin word is available as first word of every line
+# sed 's/PermitRootLogin/PERMITROOTLOGIN/' /etc/ssh/sshd_config
+
+2. This command will replace PermitRootLogin as PERMITROOTLOGIN in complete file
+# sed 's/PermitRootLogin/PERMITROOTLOGIN/g' /etc/ssh/sshd_config
+
+3. Delete Second Line in a file
+# sed '2d' filename
+
+4. Delete Last Line of a file
+# sed '$d' filename
+
+5. Deletes the line which has "naveen" as a word and also takes backup of a file
+# sed -i.bak '/naveen/d' filename
+
+6. Delete First 10 Lines of a file
+# sed -i.bak '1,10d' file
+
+7. Delete 12th to 15th lines from a file
+# sed -i.bak '12,15d' file
+
+8. Save Permanent changes to file and also takes backup of original file 
+# sed -i.bak 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+
+9. Replace hello word with hi and print only modified lines
+-n option tells sed to suppress the default output. It is often used in combination with the p command to print only the selected lines of the input.
+-e option is used to specify a command or set of commands to be executed. It allows you to specify multiple commands for sed to execute on the input text.
+For example, the following sed command reads input from a file, replaces all occurrences of "hello" with "hi", and prints only the modified lines:
+# sed -n -e 's/hello/hi/p' input.txt
+
+10. print 1st to 4th lines and also print from 6th to 10th lines, use -e option to make multiple selections. -e means expression
+# sed -n -e '1,4p' -e '6,10p' sshd_config
+
+
+
 
 sed 's/Python/python/' python.txt	--> This command will replace Python as python if Python word is available as first word of every line
 sed 's/Python/python/g' python.txt	--> This command will replace Python as python in complete file
