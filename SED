@@ -34,8 +34,45 @@ For example, the following sed command reads input from a file, replaces all occ
 10. print 1st to 4th lines and also print from 6th to 10th lines, use -e option to make multiple selections. -e means expression
 # sed -n -e '1,4p' -e '6,10p' sshd_config
 
+#####with or without Space between number and Letter p doesn't matter
+#####single or double quotes doesn't matter
+#####RECOMMENDED TO USE SINGLE QUOTES
 
+11. Print Third Line in a file
+# sed -n '3p' /etc/ssh/sshd_config
 
+12. Print 2nd Line to 5th Line of a file
+# sed -n "2,5p" /etc/ssh/sshd_config or sed -n "2,5 p" /etc/ssh/sshd_config or sed -n '2,5p' /etc/ssh/sshd_config or sed -n '2,5 p' /etc/ssh/sshd_config
+
+13. Print Last Line of a file
+# sed -n '$p' /etc/ssh/sshd_config
+
+14. Print Second Line to Last Line of a file
+# sed -n '2,$p' /etc/ssh/sshd_config
+
+15. Print add four lines to First Line(it will print Total of 5 lines)
+# sed -n '1,+4p' filename
+
+16. print next one line starting from 4th line
+# sed -n '4,+1p' filename
+
+17. for example M is 1 and N is 2 and SED will skip every Nth Line
+# sed -n '1~2p' /etc/ssh/sshd_config
+
+18. prints 1st line and then 6th and 11th line
+# sed -n '1~5p' /etc/ssh/sshd_config
+
+19. prints 1st line and then 5th and 9th line
+# sed -n '1~4p' /etc/ssh/sshd_config
+
+20. Prints 2 4 6 8 10 lines
+# sed -n '2~2 p' file
+
+21. Prints 2 6 10 Lines
+# sed -n '2~4 p' file
+
+22. Print Lines That have Match word "Linux"
+# sed -n '/Linux/p' file
 
 sed 's/Python/python/' python.txt	--> This command will replace Python as python if Python word is available as first word of every line
 sed 's/Python/python/g' python.txt	--> This command will replace Python as python in complete file
