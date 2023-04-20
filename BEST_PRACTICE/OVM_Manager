@@ -1,0 +1,32 @@
+1. Oracle VM:Reinstall OVM Manager Without Data Loss And Without Disturbing Running VM Guests By Reusing The OVM Manager UUID (Doc ID 2359492.1)
+https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=344925497801475&id=2359492.1&_afrWindowMode=0&_adf.ctrl-state=103buhei11_4
+
+2. Oracle® VM Administrator's Guide for Release 3.4\
+https://docs.oracle.com/en/virtualization/oracle-vm/3.4/admin/vmadm-backup-restore.html#vmadm-backup-restore-ovmm
+
+3. Oracle VM: How To Regenerate The Oracle VM Manager 3.3.x/3.4.x DB (Doc ID 2038168.1)
+https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=345049525866591&id=2038168.1&_afrWindowMode=0&_adf.ctrl-state=103buhei11_53
+
+4. [PCA/OVM] How to Reset Unknown Admin & Weblogic Password (Doc ID 2528670.1)
+https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=345106266338358&id=2528670.1&_afrWindowMode=0&_adf.ctrl-state=103buhei11_102
+
+5. Oracle VM 3: How to change the password for Oracle VM Manager MySQL database (Doc ID 2073368.1)
+https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=345155617516608&id=2073368.1&_afrWindowMode=0&_adf.ctrl-state=103buhei11_151
+
+6. 	Oracle VM Manager Upgrade Fails with "Error creating new domain!" (Doc ID 2323800.1)
+https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=345265400729789&id=2323800.1&_afrWindowMode=0&_adf.ctrl-state=103buhei11_217
+
+7. Restoring Oracle VM Manager
+https://docs.oracle.com/cd/E50245_01/E50251/html/vmadm-manager-restore.html
+
+8. 5.1.1 Backing Up The Oracle VM Manager Configuration File
+https://docs.oracle.com/cd/E50245_01/E50251/html/vmadm-manager-backup.html
+
+9. 1.2.1.2 Oracle VM Diagnostic Capture (VMPInfo3)
+https://docs.oracle.com/cd/E50245_01/E50251/html/vmadm-manager-vmpinfo.html
+
+10. Running configure_client_cert_login.sh Fails Login (Doc ID 2466519.1)
+https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=345462118630481&id=2466519.1&_afrWindowMode=0&_adf.ctrl-state=103buhei11_266
+
+11. Retrieve the Oracle VM Manager UUID (Doc ID 2038308.1)
+https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=345592990745672&parent=EXTERNAL_SEARCH&sourceId=HOWTO&id=2038308.1&_afrWindowMode=0&_adf.ctrl-state=103buhei11_413
