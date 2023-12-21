@@ -42,3 +42,6 @@ ip route add 192.168.0.0/24 dev enp0s3
 
 To reject routing to a particular host or network
 route add -host 192.168.1.51 reject
+
+
+#ip route add default via 10.21.18.1
