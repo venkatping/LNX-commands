@@ -5,3 +5,16 @@ nmcli connection show
 nmcli connection up bond-slave-enp0s8
 nmcli connection up bond-slave-enp0s9
 nmcli connection up bond0
+#nmcli con add type bond con-name bond0 ifname bond0 mode active-backup ip4 10.21.18.23/24"
+# nmcli connection
+#nmcli con add type bond-slave ifname eno1 master bond0
+#nmcli con add type bond-slave ifname eno2 master bond0
+#nmcli connection up bond-slave-eno1
+#nmcli connection up bond-slave-eno2
+#nmcli con up bond0
+#nmcli con mod bond0 ipv4.gateway 10.21.18.1"
+#ip link
+#ls /sys/class/net/bond0 or
+#nmcli device show bond0
+#nmcli connection modify bond0 ipv6.method disabled
+#nmcli connection modify bond0 ipv6.method ignore
